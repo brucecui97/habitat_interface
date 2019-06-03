@@ -9,7 +9,13 @@
 	<node pkg="image_view" type="image_view" name="image_view">
 		<remap from="image" to="ros_img_rgb"/>
 	</node>
-	
+	<node pkg="rqt_graph" type="rqt_graph" name="rqt_graph"/>
+	<node pkg="rqt_tf_tree" type="rqt_tf_tree" name="rqt_tf_tree"/>
+	<node pkg="rviz" type="rviz" name="rviz"/>
 
+	<node pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" name="depthimage_to_laserscan">
+		<remap from="image" to="ros_img_depth"/>
+		<remap from="camera_info" to="camera_info_topic"/>
+	</node>
 
 </launch>
