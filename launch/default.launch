@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<launch>
+
+	<node pkg="habitat_interface" type="agent_tf_broadcaster.py" name="agent_tf_broadcaster" />
+	<node pkg="habitat_interface" type="depth_ros.py" name="depth_ros" />
+	<node pkg="habitat_interface" type="joy_controller.py" name="joy_controller" />
+	<node pkg="habitat_interface" type="viewer.py" name="viewer" />
+	<node pkg="joy" type="joy_node" name="joy_node"/>
+	<node pkg="image_view" type="image_view" name="image_view">
+		<remap from="image" to="ros_img_rgb"/>
+	</node>
+	
+
+
+</launch>
