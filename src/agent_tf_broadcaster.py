@@ -8,6 +8,8 @@ import rospy
 from rospy.numpy_msg import numpy_msg
 from rospy_tutorials.msg import Floats
 import tf
+import numpy as np
+import quaternion
 
 
 def handle_agent_pose(msg,agentname):
@@ -17,7 +19,9 @@ def handle_agent_pose(msg,agentname):
     #ros_quaternion_orient = tf.transformations.quaternion_from_euler(yaw,roll,pitch) 
    
     #why is quaternion backwards??????
-    ros_quaternion_orient = (-habitat_quaternion_orient[0],-habitat_quaternion_orient[2],-habitat_quaternion_orient[1],-habitat_quaternion_orient[3])
+    ros_quaternion_orient = np.quaternion(-habitat_quaternion_orient[0],-habitat_quaternion_orient[2],-habitat_quaternion_orient[1],-habitat_quaternion_orient[3])
+    ros_quaternion_orient = np.quaternion(0,0,1,0) * ros_quaternion_orient
+    ros_quaternion_orient = (ros_quaternion_orient.w,ros_quaternion_orient.x,ros_quaternion_orient.y,ros_quaternion_orient.z)
     #ros_quaternion_orient = (habitat_quaternion_orient[0],habitat_quaternion_orient[1],-habitat_quaternion_orient[2],habitat_quaternion_orient[3])
     
     print(yaw)
@@ -26,14 +30,14 @@ def handle_agent_pose(msg,agentname):
                      ros_quaternion_orient,
                      rospy.Time.now(),
                      agentname,
-                     "map")
+                     "nav")
 
     br2 = tf.TransformBroadcaster()
     br2.sendTransform((-pose_array[2], -pose_array[0], 0),
                      ros_quaternion_orient,
                      rospy.Time.now(),
                      "camera_depth_frame",
-                     "map")
+                     "nav")
     print('handle_agent_pose_called')
 
 if __name__ == '__main__':
