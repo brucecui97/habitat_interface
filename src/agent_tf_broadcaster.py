@@ -15,25 +15,28 @@ import quaternion
 def handle_agent_pose(msg,agentname):
     pose_array=msg.data
     habitat_quaternion_orient = pose_array[3:]
+    print(habitat_quaternion_orient)
     (roll, pitch,yaw) = tf.transformations.euler_from_quaternion(habitat_quaternion_orient)
     #ros_quaternion_orient = tf.transformations.quaternion_from_euler(yaw,roll,pitch) 
    
     #why is quaternion backwards??????
-    ros_quaternion_orient = np.quaternion(-habitat_quaternion_orient[0],-habitat_quaternion_orient[2],-habitat_quaternion_orient[1],-habitat_quaternion_orient[3])
-    ros_quaternion_orient = np.quaternion(0,0,1,0) * ros_quaternion_orient
-    ros_quaternion_orient = (ros_quaternion_orient.w,ros_quaternion_orient.x,ros_quaternion_orient.y,ros_quaternion_orient.z)
-    #ros_quaternion_orient = (habitat_quaternion_orient[0],habitat_quaternion_orient[1],-habitat_quaternion_orient[2],habitat_quaternion_orient[3])
+    ros_quaternion_orient = np.quaternion(habitat_quaternion_orient[0],-habitat_quaternion_orient[3],-habitat_quaternion_orient[1],habitat_quaternion_orient[2])
+    #ros_quaternion_orient = np.quaternion(habitat_quaternion_orient[0],-habitat_quaternion_orient[3],habitat_quaternion_orient[1],habitat_quaternion_orient[2])
+    #ros_quaternion_orient = np.quaternion(0,0,0,1) * ros_quaternion_orient
+    ros_quaternion_orient = (ros_quaternion_orient.x,ros_quaternion_orient.y,ros_quaternion_orient.z,ros_quaternion_orient.w)
+
+    #print(tf.transformations.quaternion_from_euler(0,0,1))
+    #ros_quaternion_orient = (habitat_quaternion_orient[0],habitat_quaternion_orient[3],-habitat_quaternion_orient[2],habitat_quaternion_orient[1])
     
-    print(yaw)
     br1 = tf.TransformBroadcaster()
-    br1.sendTransform((-pose_array[2], -pose_array[0], 0),
+    br1.sendTransform((-pose_array[2], -pose_array[0], pose_array[1]),
                      ros_quaternion_orient,
                      rospy.Time.now(),
                      agentname,
                      "nav")
 
     br2 = tf.TransformBroadcaster()
-    br2.sendTransform((-pose_array[2], -pose_array[0], 0),
+    br2.sendTransform((-pose_array[2], -pose_array[0], pose_array[1]),
                      ros_quaternion_orient,
                      rospy.Time.now(),
                      "camera_depth_frame",
