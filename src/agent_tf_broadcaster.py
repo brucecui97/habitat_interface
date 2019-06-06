@@ -17,13 +17,9 @@ def handle_agent_pose(msg,agentname):
     habitat_quaternion_orient = pose_array[3:]
     print(habitat_quaternion_orient)
     (roll, pitch,yaw) = tf.transformations.euler_from_quaternion(habitat_quaternion_orient)
-    #ros_quaternion_orient = tf.transformations.quaternion_from_euler(yaw,roll,pitch) 
-   
-    #why is quaternion backwards??????
-    ros_quaternion_orient = np.quaternion(habitat_quaternion_orient[0],-habitat_quaternion_orient[3],-habitat_quaternion_orient[1],habitat_quaternion_orient[2])
-    #ros_quaternion_orient = np.quaternion(habitat_quaternion_orient[0],-habitat_quaternion_orient[3],habitat_quaternion_orient[1],habitat_quaternion_orient[2])
-    #ros_quaternion_orient = np.quaternion(0,0,0,1) * ros_quaternion_orient
-    ros_quaternion_orient = (ros_quaternion_orient.x,ros_quaternion_orient.y,ros_quaternion_orient.z,ros_quaternion_orient.w)
+
+    ros_quaternion_orientwxyz = np.quaternion(habitat_quaternion_orient[0],-habitat_quaternion_orient[3],-habitat_quaternion_orient[1],habitat_quaternion_orient[2])
+    ros_quaternion_orient = (ros_quaternion_orientwxyz.x,ros_quaternion_orientwxyz.y,ros_quaternion_orientwxyz.z,ros_quaternion_orientwxyz.w)
 
     #print(tf.transformations.quaternion_from_euler(0,0,1))
     #ros_quaternion_orient = (habitat_quaternion_orient[0],habitat_quaternion_orient[3],-habitat_quaternion_orient[2],habitat_quaternion_orient[1])
