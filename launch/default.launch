@@ -5,7 +5,9 @@
 	<node pkg="habitat_interface" type="depth_ros.py" name="depth_ros" />
 	<node pkg="habitat_interface" type="joy_controller.py" name="joy_controller" />
 	<node pkg="habitat_interface" type="viewer.py" name="viewer" />
-	<node pkg="joy" type="joy_node" name="joy_node"/>
+	<node pkg="joy" type="joy_node" name="joy_node">
+		<param name="autorepeat_rate " value="50" />
+	</node>
 	<node pkg="image_view" type="image_view" name="image_view">
 		<remap from="image" to="ros_img_rgb"/>
 	</node>
@@ -16,6 +18,8 @@
 	<node pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" name="depthimage_to_laserscan">
 		<remap from="image" to="ros_img_depth"/>
 		<remap from="camera_info" to="camera_info_topic"/>
+		<param name="output_frame_id" value="laser" />
+		<param name="scan_time" value="0.025" />
 	</node>
 
 </launch>
