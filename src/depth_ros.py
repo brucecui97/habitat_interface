@@ -11,6 +11,7 @@ from rospy.numpy_msg import numpy_msg
 from cv_bridge import CvBridge, CvBridgeError
 from sensor_msgs.msg import Image
 from sensor_msgs.msg import CameraInfo
+import std_msgs.msg
 
 import cv2
 import numpy as np
@@ -31,12 +32,16 @@ def callback(data):
     #img1.setflags(write=1)
     #print(img1)
     #img1[img1==0]=0.01
+    h = std_msgs.msg.Header()
+    h.stamp = rospy.Time.now()
     image_message = CvBridge().cv2_to_imgmsg(img, encoding="passthrough")
-
+    #print(str(type(image_message.header))+"this is type of imsage_message")
+    #print("this is type of h" +str(type(h)))
+    image_message.header=h
     pub.publish(image_message)
 
-
     camera_info_msg = CameraInfo()
+    camera_info_msg.header=h
     width, height = 256, 256
     fx, fy = 256/2, 256/2
     cx, cy = 128, 128
@@ -56,9 +61,9 @@ def callback(data):
 
     #camera_info_msg.roi.height=height
     #camera_info_msg.roi.width=width
+    #camera_info_msg.header.stamp.secs=rospy.Time.now()
     camera_info_pub.publish(camera_info_msg)
 
-    
 
 
 def listener():
