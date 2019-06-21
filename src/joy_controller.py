@@ -14,7 +14,7 @@ import cv2
 import numpy as np
 
 
-pub1 = rospy.Publisher('bc_cmd_vel', Twist,queue_size=10)
+pub1 = rospy.Publisher('cmd_vel', Twist,queue_size=10)
 
 # Author: Andrew Dai
 def callback(data):
