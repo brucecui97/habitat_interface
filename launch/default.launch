@@ -13,7 +13,6 @@
 	</node>
 	<node pkg="rqt_graph" type="rqt_graph" name="rqt_graph"/>
 	<node pkg="rqt_tf_tree" type="rqt_tf_tree" name="rqt_tf_tree"/>
-	<node pkg="rviz" type="rviz" name="rviz"/>
 
 	<node pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" name="depthimage_to_laserscan">
 		<remap from="image" to="ros_img_depth"/>
@@ -21,5 +20,32 @@
 		<param name="output_frame_id" value="laser" />
 		<param name="scan_time" value="0.025" />
 	</node>
+
+	<node pkg="laser_scan_matcher" type="laser_scan_matcher_node"
+		name="laser_scan_matcher_node" output="screen">
+		
+		<param name="max_iterations" value="10"/>
+		<param name="fixed_frame" value="odom"/>
+		<param name="base_frame" value="base_frame"/>
+		<param name="fixed_frame" value="odom"/>
+		
+	
+	</node>
+
+	 <!--<include file="$(find hector_slam_launch)/launch/bcf.launch"/> -->
+
+	<node pkg="tf" type="static_transform_publisher" name="base_frame_to_laser" args="0.0 0.0 0.0 0.0 0.0 0.0 /base_frame /laser 1" />
+   	 <!-- <node pkg="tf" type="static_transform_publisher" name="base_frame_to_odom" args="0.0 0.0 0.0 0.0 0.0 0.0 /odom /base_frame 1" />-->
+    <!--<node pkg="tf" type="static_transform_publisher" name="world_to_map" args="0.0 0.0 0.0 0.0 0.0 0.0 /world map 1" />-->
+
+    <node pkg="rviz" type="rviz" name="rviz" required="true"
+          args="-d $(find turtlebot3_navigation)/rviz/turtlebot3_navigation.rviz"/>
+
+  <!-- Arguments -->
+  <arg name="map_file" default="/home/bruce/castle.yaml"/>
+  <arg name="open_rviz" default="true"/>
+  <arg name="move_forward_only" default="false"/>
+
+
 
 </launch>
