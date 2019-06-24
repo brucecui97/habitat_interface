@@ -20,19 +20,21 @@ pub1 = rospy.Publisher('cmd_vel', Twist,queue_size=10)
 def callback(data):
     #negative sign in vel_z because agent eyes look at negative z axis
     vel_max=10 #m/s
-    vel_z=-4*data.axes[1]*vel_max*0.001
+    vel_z=4*data.axes[1]*vel_max*0.001
+    #something to do with the joy contrller is wrong as pushing right seems to be negative
     vel_x=-4*data.axes[0]*vel_max*0.001
 
-    yaw=data.axes[3]
+    #again negative because of joy controller
+    yaw=-data.axes[3]
     pitch=data.axes[4]
     
     vel_msg = Twist()
-    vel_msg.linear.x=vel_x
-    vel_msg.linear.y=0
-    vel_msg.linear.z=vel_z
-    vel_msg.angular.x = pitch
-    vel_msg.angular.y = yaw
-    vel_msg.angular.z = 0
+    vel_msg.linear.x=vel_z
+    vel_msg.linear.y=vel_x
+    vel_msg.linear.z=0
+    vel_msg.angular.x = 0
+    vel_msg.angular.y = pitch
+    vel_msg.angular.z = yaw
 
     pub1.publish(vel_msg)
 
