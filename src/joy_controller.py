@@ -25,7 +25,7 @@ def callback(data):
     vel_x=-4*data.axes[0]*vel_max*0.001
 
     #again negative because of joy controller
-    yaw=-data.axes[3]
+    yaw=data.axes[3]
     pitch=data.axes[4]
     
     vel_msg = Twist()
