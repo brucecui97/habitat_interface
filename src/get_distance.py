@@ -9,17 +9,34 @@ from sensor_msgs.msg import Image
 from sensor_msgs.msg import PointCloud2
 import sensor_msgs.point_cloud2 as pc2
 
+import tf
+import math
+
 import cv2
 import numpy as np
 import time
 import pickle
 
+# class NN_sensor():
+#     def __init__(self):
+#         self.depth=None
+#         self.goal=None
+
 pub_depth = rospy.Publisher("depth", numpy_msg(Floats), queue_size=10)
+linear = None
+angular = None
+
 def listener():
+    global linear
+    global angular
     def callback(cloud):
+       
         bridge = CvBridge()
         cv_image = bridge.imgmsg_to_cv2(cloud, desired_encoding="passthrough")
         img_copy = np.copy(np.float32(cv_image))
+
+        print("inside call back linear is " + str(linear))
+        print("inside call back angular is " + str(angular))
         if img_copy.shape == (256, 256):
 
             inds = np.where(np.isnan(img_copy))
@@ -27,39 +44,50 @@ def listener():
             MAX_DEPTH = 10
             img_copy[inds] = MAX_DEPTH
             pub_depth.publish(img_copy.ravel())
-            
-            # pickle.dump(foo, open("foonan.p", "wb"))
-            # pickle.dump( foo, open( "nofoonan.p", "wb" ) )
-            # print(np.amax(foo))
 
-            # print(type(foo))
-            # print('foo was saved')
-            # sub.unregister()
-            # print('sub was unregistered')
-
-        # gen = pc2.read_points(cloud, skip_nans=True, field_names=("x", "y", "z"))
-        # print(sum(1 for x in gen))
-
-        # print(type(gen))
-        # for val in gen:
-        #     #print(type(val))
-        #     print(val.shape)
-
-        # for p in pc2.read_points(cloud, field_names = ("x", "y", "z"), skip_nans=True):
-        #     print " x : %f  y: %f  z: %f" %(p[0],p[1],p[2])
-
-        # cloud_points = list(
-        #     pc2.read_points(cloud, skip_nans=False, field_names=("x", "y", "z"))
-        # )
-        # pickle.dump( cloud_points, open( "bc.p", "wb" ) )
-        # print('saved')
-        # sub.unregister()
-
-    print("listener started")
     rospy.init_node("depth_distance")
     # sub = rospy.Subscriber("/camera/depth/points", PointCloud2, callback)
+
+    rate = rospy.Rate(10.0)
+    tf_listner = tf.TransformListener()
+
+
+    trans = None
+    while trans is None:
+        try:
+            (trans, rot) = tf_listner.lookupTransform(
+                "/base_footprint", "/goal", rospy.Time(0)
+            )
+        except:
+            pass
+
+    print("trans is initialized")
+    (trans, rot) = tf_listner.lookupTransform("/base_footprint", "/goal", rospy.Time(0))
+
+    angular = math.atan2(trans[1], trans[0])
+    linear = 0.5 * math.sqrt(trans[0] ** 2 + trans[1] ** 2)
+    print(linear)
+
     sub = rospy.Subscriber("/camera/depth/image_raw", Image, callback)
-    rospy.spin()
+
+    while not rospy.is_shutdown():
+        try:
+            (trans, rot) = tf_listner.lookupTransform(
+                "/base_footprint", "/goal", rospy.Time(0)
+            )
+        except (
+            tf.LookupException,
+            tf.ConnectivityException,
+            tf.ExtrapolationException,
+        ):
+            continue
+
+        angular = math.atan2(trans[1], trans[0])
+        linear = 0.5 * math.sqrt(trans[0] ** 2 + trans[1] ** 2)
+        # print("linear is " + str(linear))
+        # print("angular is " + str(angular))
+
+        rate.sleep()
 
 
 if __name__ == "__main__":
