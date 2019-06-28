@@ -22,15 +22,19 @@ import pickle
 #         self.depth=None
 #         self.goal=None
 
-pub_depth = rospy.Publisher("depth", numpy_msg(Floats), queue_size=10)
+pub_depth_and_pointgoal = rospy.Publisher(
+    "depth_and_pointgoal", numpy_msg(Floats), queue_size=10
+)
 linear = None
 angular = None
+
 
 def listener():
     global linear
     global angular
+
     def callback(cloud):
-       
+
         bridge = CvBridge()
         cv_image = bridge.imgmsg_to_cv2(cloud, desired_encoding="passthrough")
         img_copy = np.copy(np.float32(cv_image))
@@ -43,14 +47,17 @@ def listener():
 
             MAX_DEPTH = 10
             img_copy[inds] = MAX_DEPTH
-            pub_depth.publish(img_copy.ravel())
+
+            depth_np = np.float32(img_copy.ravel())
+            pointgoal_np = np.float32([linear, angular])
+            depth_pointgoal_np = np.concatenate((depth_np, pointgoal_np))
+            pub_depth_and_pointgoal.publish(np.float32(depth_pointgoal_np))
 
     rospy.init_node("depth_distance")
     # sub = rospy.Subscriber("/camera/depth/points", PointCloud2, callback)
 
     rate = rospy.Rate(10.0)
     tf_listner = tf.TransformListener()
-
 
     trans = None
     while trans is None:
