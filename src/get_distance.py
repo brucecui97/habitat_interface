@@ -34,6 +34,7 @@ def listener():
     global angular
 
     def callback(cloud):
+        print('call back entered')
 
         bridge = CvBridge()
         cv_image = bridge.imgmsg_to_cv2(cloud, desired_encoding="passthrough")
@@ -47,11 +48,16 @@ def listener():
 
             MAX_DEPTH = 10
             img_copy[inds] = MAX_DEPTH
-
+            img_copy = (img_copy+0.23)/10
+            pickle.dump( img_copy, open( "foo.p", "wb" ) )
             depth_np = np.float32(img_copy.ravel())
             pointgoal_np = np.float32([linear, angular])
             depth_pointgoal_np = np.concatenate((depth_np, pointgoal_np))
             pub_depth_and_pointgoal.publish(np.float32(depth_pointgoal_np))
+
+            # cv2.imshow("Depth", img_copy)
+            # cv2.waitKey(100)
+            # time.sleep(0.2)
 
     rospy.init_node("depth_distance")
     # sub = rospy.Subscriber("/camera/depth/points", PointCloud2, callback)
