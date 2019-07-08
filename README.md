@@ -1,23 +1,11 @@
-# Design Doc Title
-Design Doc
+# Habitat ROS Interface
+
 ## Stakeholders
 
 List stakeholders for project/feature.
 
-| Role					| Person			|
-|-----------------------|-------------------|
-| Dev Owner 			|					|
-| Other Dev 1 (Engine)	|					|
-| Other Dev 2 (Hub)		|					|
-| Product				|					|
-| Docs					|					|
-| QA					|					|
-| Program Management	|					|
-| UX					|					|
-
-## Problem Statement
-
-
+## Motivation
+Real world robots move in a continous environment. To this end, we aim to to build on top of the existing Habitat simulator to create a realistic agent transversing through the highly photorealistic 3D environments with ROS connectivity.
 
 ## Goals
 
@@ -26,36 +14,31 @@ List goals you are planning on achieving with the project/feature.
 1. To connect Habitat simulator environment with ROS so that traditional ROS tools such as SLAM and navigation can be used
 2. Test the trained agent with discrete action spaces through teleportation in a more realistic way 
 3. Test the trained agent with discrete action space in a traditional robotics simulation environment (Gazebo)
-
-## Non-Goals
-
+4. To ease the transition from simulation to real by adding complex dynamics to the existing Facebook Habitat platform
 
 ## Design
 
 See one drive diagram
 
-One-pager of the design and implementation plan. Can be high level and does not
-need to call out explicit functional code, though it is up to the owner on how
-deep they want to go.
-
 ## API
 
-What API endpoints will be exposed to the user as part of this feature?
+Not applicable
 
 ## Dependencies
-
-List any external component and/or cross functional dependencies.
+ROS1 (this is likely to change as we evaluate and transition to the new ROS2 platform)
 
 ## Testing
+No tests written at current stage. Coming soon.
 
 ### Functional Testing
 
-Plan for functional testing (automated, non-automated, etc).
+Coming soon
 
 ### Performance Testing
 
-Plan for performance testing (automated, non-automated, etc) if needed.
+Coming soon
 
 ### Scale Testing
 
-Plan for scale testing (automated, non-automated, etc) if needed.
+Coming soon
+
