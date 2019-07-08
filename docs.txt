@@ -1,0 +1,15 @@
+This ROS package demonstrates several interfaces with the habitat sim environment
+
+Specifically this package allows us provide the neccesary inputs (cmd_velocity) and receive outputs (depth sensor reading, pointgoal location) from the Habitat environment
+
+OUTPUT
+
+The habitat environnent produces observations as a numpy array and because of ROS compatability issues, I had to ravel the observation as a oen dimentaion artray to publish over ROS and then reasseble the sensor readings.
+
+in addition, to simplify things, I published the pointgoal goal location in the same array so the two readings (required for entering into the nerual net) are sychrnous
+
+Therefore, with the launch file I can seamlessly extract the depth image either as a ros image or as a 2 dimensional numpy array
+
+INPUT
+This package also contains a node that publishes command velocity messages to be consumed by the habitat environment. 
+
