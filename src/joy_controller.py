@@ -14,7 +14,7 @@ def callback(data):
 
     # negative sign because pushing right produces negative number on joystick
     vel_x = -4 * data.axes[0] * vel_max * 0.01
-    yaw = data.axes[3] * 30
+    yaw = data.axes[3] * 30/180*3.1415926
     pitch = data.axes[4] * 30
 
     vel_msg = Twist()

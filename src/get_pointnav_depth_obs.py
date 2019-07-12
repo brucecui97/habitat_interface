@@ -48,7 +48,7 @@ def listener():
 
             MAX_DEPTH = 10
             img_copy[inds] = MAX_DEPTH
-            img_copy = (img_copy+0.23)/10
+            img_copy = (img_copy-0.2)/10
             pickle.dump( img_copy, open( "foo.p", "wb" ) )
             depth_np = np.float32(img_copy.ravel())
             pointgoal_np = np.float32([linear, angular])

@@ -11,10 +11,9 @@ Real world robots move in a continous environment. To this end, we aim to to bui
 
 List goals you are planning on achieving with the project/feature.
 
-1. To connect Habitat simulator environment with ROS so that traditional ROS tools such as SLAM and navigation can be used
-2. Test the trained agent with discrete action spaces through teleportation in a more realistic way 
-3. Test the trained agent with discrete action space in a traditional robotics simulation environment (Gazebo)
-4. To ease the transition from simulation to real by adding complex dynamics to the existing Facebook Habitat platform
+1. Connect Habitat simulator environment with ROS so that traditional ROS packages for SLAM and navigation can be used​
+2. Test discrete action space trained agents in a kinematic environment​
+3. Test discrete action space trained agents in a traditional robotics simulation environment (Gazebo) with complex physcics 
 
 ## Design
 
@@ -25,9 +24,11 @@ See one drive diagram
 Not applicable
 
 ## Dependencies
+
 ROS1 (this is likely to change as we evaluate and transition to the new ROS2 platform)
 
 ## Testing
+
 No tests written at current stage. Coming soon.
 
 ### Functional Testing
