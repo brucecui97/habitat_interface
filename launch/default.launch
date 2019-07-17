@@ -34,9 +34,9 @@
 
 
 	<node pkg="tf" type="static_transform_publisher" name="base_frame_to_laser" args="0.0 0.0 0.0 0.0 0.0 0.0 /base_frame /laser 1" />
-
+	<node pkg="rviz" type="rviz" name="rviz" required="false" args="-d $(find turtlebot3_navigation)/rviz/turtlebot3_navigation.rviz"/>
 	<!-- Arguments -->
-	<arg name="map_file" default="/home/bruce/castle.yaml"/>
+	<arg name="map_file" default="$(find habitat_interface)/maps/gibson.yaml"/>
 	<arg name="open_rviz" default="true"/>
 	<arg name="move_forward_only" default="false"/>
 

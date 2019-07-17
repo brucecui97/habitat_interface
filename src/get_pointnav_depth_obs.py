@@ -31,11 +31,7 @@ def listener():
             (trans, rot) = tf_listner.lookupTransform(
                 "/base_footprint", "/goal", rospy.Time(0)
             )
-        except (
-            tf.LookupException,
-            tf.ConnectivityException,
-            tf.ExtrapolationException,
-        ):
+        except:
             pass
 
         angular = math.atan2(trans[1], trans[0])

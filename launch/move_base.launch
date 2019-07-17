@@ -1,11 +1,10 @@
 <launch>
 
-   <arg name="map_path" default="/home/bruce/gibson.yaml"/>
+   <arg name="map_path" default="$(find habitat_interface)/maps/gibson.yaml"/>
 
    <master auto="start"/>
    <!-- Run the map server -->
-   <!-- <node name="map_server" pkg="map_server" type="map_server" args="/home/bruce/castle.yaml"/>-->
-   <node name="map_server" pkg="map_server" type="map_server" args="/home/bruce/gibson.yaml"/>
+   <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_path)"/>
 
 
    <!--- Run AMCL -->
@@ -47,11 +46,11 @@
 
    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
 
-      <rosparam file="/home/bruce/catkin_ws/src/habitat_interface/costmap_common_params.yaml" command="load" ns="global_costmap" />
-      <rosparam file="/home/bruce/catkin_ws/src/habitat_interface/costmap_common_params.yaml" command="load" ns="local_costmap" />
-      <rosparam file="/home/bruce/catkin_ws/src/habitat_interface/local_costmap_params.yaml" command="load" />
-      <rosparam file="/home/bruce/catkin_ws/src/habitat_interface/global_costmap_params.yaml" command="load" />
-      <rosparam file="/home/bruce/catkin_ws/src/habitat_interface/base_local_planner_params.yaml" command="load" />
+      <rosparam file="$(find habitat_interface)/navigation_params/costmap_common_params.yaml" command="load" ns="global_costmap" />
+      <rosparam file="$(find habitat_interface)/navigation_params/costmap_common_params.yaml" command="load" ns="local_costmap" />
+      <rosparam file="$(find habitat_interface)/navigation_params/local_costmap_params.yaml" command="load" />
+      <rosparam file="$(find habitat_interface)/navigation_params/global_costmap_params.yaml" command="load" />
+      <rosparam file="$(find habitat_interface)/navigation_params/base_local_planner_params.yaml" command="load" />
    </node>
 
    <node pkg="rosservice" type="rosservice" name="global_loc" args="call --wait /global_localization"/>
@@ -60,10 +59,9 @@
    <arg name="trajectory_source_frame_name" default="/base_frame"/>
    <arg name="trajectory_update_rate" default="4"/>
    <arg name="trajectory_publish_rate" default="0.25"/>
-   <arg name="map_file_path" default="/home/bruce"/>
+   <arg name="map_file_path" default="$(find habitat_interface)"/>
    <arg name="map_file_base_name" default="gibson.yaml"/>
 
-   <!-- <arg name="map_file_path" value="$(arg geotiff_map_file_path)"/> -->
 
    <node pkg="hector_trajectory_server" type="hector_trajectory_server" name="hector_trajectory_server" output="screen">
       <param name="target_frame_name" type="string" value="/map" />
