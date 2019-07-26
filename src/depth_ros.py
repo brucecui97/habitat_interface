@@ -11,8 +11,8 @@ import std_msgs.msg
 from cv_bridge import CvBridge, CvBridgeError
 import numpy as np
 
-DEPTH_IMG_WIDTH = 256
-DEPTH_IMG_HEIGHT = 256
+DEPTH_IMG_WIDTH = 720
+DEPTH_IMG_HEIGHT = 720
 
 pub = rospy.Publisher("ros_img_depth", Image, queue_size=10)
 camera_info_pub = rospy.Publisher("camera_info_topic", CameraInfo, queue_size=0)
@@ -21,7 +21,7 @@ camera_info_pub = rospy.Publisher("camera_info_topic", CameraInfo, queue_size=0)
 def callback(data):
     print(rospy.get_name(), "I heard %s" % str(data.data))
 
-    img = np.float32((np.reshape(data.data, (256, 256))))
+    img = np.float32((np.reshape(data.data, (DEPTH_IMG_WIDTH, DEPTH_IMG_HEIGHT))))
 
     h = std_msgs.msg.Header()
     h.stamp = rospy.Time.now()

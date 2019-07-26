@@ -19,8 +19,8 @@ pub_depth_and_pointgoal = rospy.Publisher(
 )
 
 
-DEPTH_IMG_WIDTH = 256
-DEPTH_IMG_HEIGHT = 256
+DEPTH_IMG_WIDTH = 720
+DEPTH_IMG_HEIGHT = 720
 MAX_DEPTH = 10
 FAKE_DISTANCE_AMOUNT = 0.2
 
