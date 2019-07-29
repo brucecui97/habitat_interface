@@ -9,7 +9,7 @@ Connect Habitat simulator environment with ROS so that traditional ROS packages 
 
 ## Design
 
-See implementation diagram
+![implementation](images/implementation.png)
 
 ## API
 
