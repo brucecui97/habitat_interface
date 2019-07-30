@@ -95,9 +95,7 @@ You can modify the _update_position and _update_attitude behaviours/methods in t
 Change the _sensor_rate class variable in hab_ros_interface.py
 
 ## Testing
-TBD
-
-Haibtat uses pytest, and currently I'm learning how to use pytest with ROS
+TBD (Haibtat uses pytest, and currently I'm learning how to use pytest with ROS)
 
 ## Future work 
 
