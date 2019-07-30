@@ -64,25 +64,25 @@ The following picture shows how I modified my ~/.bashrc file to complete steps 8
 This launch file also ensure all of the custom habitat sensor topics are being converted to ROS topics (e.g. numpy image converted to ROS image). Most notably, there is a node in this launch file to convert a depth image into laser scan. -->
    
 
-### Publish/subscribed topics of hab_ros_plant.py
+### Publish/subscribed topics by hab_ros_plant.py
 
 list out finialzied publish/subscribed topic names
 
-### Publish/subscribed topics of habitat_interface launch files 
+### Publish/subscribed topics by habitat_interface launch files 
 
 list out the finialized published/subscribed topic names for default.launch (possibly hector_map.launch and move_base.launch but these are pretty standard ROS package launch files so maybe just say refer to their wiki)
     
 
 ### Modifying Habitat Simulator Settings
 
-You can change simulator settings by changing the hab_ros_interface.py file.
+You can change simulator settings by modifying the hab_ros_interface.py file.
 
 #### Changing Scenes
 
 To change scenes, change the config file fed into the environment initializer in hab_ros_interface.py. 
 
 ```python
-my_env = sim_env(env_config_file="path/to/your/config/file.yaml")
+my_env = sim_env(env_config_file="path/to/your/custom/config/file.yaml")
 ```
 Specifically, inside your config file, modify the DATASET tag. See screenshot below for an example
 
@@ -93,7 +93,7 @@ Specifically, inside your config file, modify the DATASET tag. See screenshot be
 You can modify the _update_position and _update_attitude methods in hab_ros_interface.py to change the robot's behaviour at each time step. (e.g. you can specifiy that the robot has a maximum acceleration of 0.1m/s^2)
 
 #### Changing Sensor Publishing Freuqency
-change the _sensor_rate parameter in the sim_env class in hab_ros_interface.py
+Change the _sensor_rate parameter in the sim_env class in hab_ros_interface.py
 
 ## Testing
 TBD
@@ -102,7 +102,7 @@ Haibtat uses pytest, and currently I'm learning how to use pytest with ROS
 
 ## Future work 
 
-1. Place Habitat in a catkin work space (i.e. make Habitat a ROS package). The advantage of wrapping Habitat in a catkin_ws is that we can use roslaunch files to remap topics and do unit and integration tests through launch files. The main difficulty is that most of habitat's files specify relative paths, while ROS commands such as rosrun and roslaunch sets "the working directory of all nodes to $ROS_HOME, which in most cases will be $HOME/.ros" (source: https://answers.ros.org/question/235337/unable-to-read-a-file-while-using-relative-path/)
+1. Place Habitat in a catkin work space (i.e. make Habitat a ROS package). The advantage of wrapping Habitat in a catkin_ws is that we can use launch files to remap topics and do unit and integration tests. The main difficulty of this implmentation is that most of habitat's files specify relative paths, while ROS commands such as rosrun and roslaunch sets "the working directory of all nodes to $ROS_HOME, which in most cases will be $HOME/.ros" (source: https://answers.ros.org/question/235337/unable-to-read-a-file-while-using-relative-path/)
  
     Therefore, to wrap habitat in a catkin_package, we either need to change all paths in the habitat environment to be absolute paths, or need to somehow use ROS' `rospack find` feature (`$find some_package` feature in ROS launch files) to change all relative paths to absolute paths at run time.
 
@@ -110,8 +110,8 @@ Haibtat uses pytest, and currently I'm learning how to use pytest with ROS
 
     ![episode_spec_data](images/episode_spec_data.png)
 
-2. Add a simple script to convert habitat's top down map to ROS compatible map with Rviz so ground truth map exists when doing ROS navigation
-3. Add additional high resolution rgb sensors to the agent pointing in different directions
+2. Add a simple script to convert habitat generated top down maps to ROS/Rviz compatible maps so that ground truth map can be displayed when doing ROS navigation
+3. Configure additional high resolution rgb cameras (pointing in different directions) on the agent 
 4. Improve multithreading implementation of hab_ros_interface.py to optimize for performance
 5. Add unit tests and ROS node tests
 
