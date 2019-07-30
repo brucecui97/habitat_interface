@@ -43,14 +43,17 @@ Coming soon
 1. Clone this repository into your catkin_ws/src folder
 2. run cd ~/catkin_ws && catkin_make
 3. get ROS' laser scan matcher package by running sudo apt-get install ros-kinetic-laser-scan-matcher (confirm if needed)
-4. Clone habitat-api and habitat-sim and follow their installation instructions at https://github.com/brucecui97/habitat-api. Download any of the datasets provided by Habitat that you would like to use (follow habitat's instructions on how to do that) (add correct tag to use)
-5. If you have trouble installing habitat-api or sim, see habitat's issues page first. An error I encountered regularly in the past is the "ModuleNotFoundError: No module named 'habitat_sim._ext'" and my hacky way around it is to copy the _ext folder from the build directory (/habitat-sim/build/lib.linux-x86_64-3.6/habitat_sim) to (/habitat-sim/habitat_sim) (maybe ask Habitat people)
+4. Clone habitat-api and habitat-sim and follow their installation instructions at https://github.com/facebookresearch/habitat-api. Download any of the datasets provided by Habitat that you would like to use (follow habitat's instructions on how to do that) (add correct tag to use)
+5. If you have trouble installing habitat-api or sim, see habitat's issues page first. An error I encountered regularly in the past is the "ModuleNotFoundError: No module named 'habitat_sim._ext'" and my hacky way around it is to copy the _ext folder from the build directory (/habitat-sim/build/lib.linux-x86_64-3.6/habitat_sim) to (/habitat-sim/habitat_sim) (maybe ask Habitat people why after trying again first)
 6. Cut and paste the habitat_ros folder in this repo into habitat-api's root directory
 
-The following steps are to make sure you can run Anaconda along side ROS (you need Anaconda because Habitat requires python>=3.6 while ROS requires python2)
+The following steps are to make sure you can run Anaconda along side ROS (we need Anaconda because Habitat requires python>=3.6 while ROS requires python2)
 
 7. In your Anaconda environment with python version >=3.6, run pip install rospkg one time so hab_ros_plant.py can be ran from your Python3.6 Anaconda environment
-8. If your setup.bash files related to ROS is automatically being sourced by ~/.bashrc, remove that so you won't run into errors (e.g. when importing cv2, "/opt/ros/kinetic/lib/python2.7/dist-packages/cv2.so: undefined symbol: PyCObject_Type" ) I recommend adding an alias to the sourcing commands of your ROS setup.bash files and only sourcing ROS related bash files when needed) (add screen shot to my alias)
+8. If your setup.bash files related to ROS is automatically being sourced by ~/.bashrc, remove that so you won't run into errors such as the following when importing cv2 in a Python3.6 Anaconda environment: "/opt/ros/kinetic/lib/python2.7/dist-packages/cv2.so: undefined symbol: PyCObject_Type". 
+9. [optional] Add an alias to the sourcing commands of your ROS setup.bash files and only source ROS related bash files when needed) 
+
+    ![sros_alias](images/sros_alias.png)
 
 ### Installation Procedure Justifications
 1. NA
@@ -58,14 +61,21 @@ The following steps are to make sure you can run Anaconda along side ROS (you ne
 3. Normally ROS does not come with laser scan matcher package, which is needed for visual odometry (TODO confirm this)
 4. You need habitat api and habitat sim installed to run simulator backend
 5. NA
-6. The habitat_ros folder contains the plugin (python module) to interface with the Habitat backend, and this folder is not needed in your ROS package, so I recommend cutting and pasting instead of copying and pasting
-7. This step installs a new rospkg in your anaconda environment (the one you installed with your ROS distribution is done using apt-get which installs to the directory of your operating system’s default python2.7), so you can use rospkg functionalities in your anaconda environment with python>=3.6. In short, this step makes sure ROS plays nicely with Anaconda
-8. This step allows you to add ROS required paths only when you need ROS, so for instance you can run any habitat modules without issue by not calling the alias that sources the ROS paths
+6. The habitat_ros folder contains the plugin (python module) to interface with the Habitat backend, and this folder is not needed in your ROS package, so I recommend cutting and pasting instead of copying and pasting. In the future, the habitat_ros folder might be merged with habitat-api's repository so you won't have to do this step
+7. This step installs a new rospkg in your anaconda environment since the one you installed with your ROS distribution is done using apt-get which installs to you system's default python2 directory. After this step, you can use rospkg functionalities in your anaconda environment with python>=3.6. In short, this step makes sure ROS works in an Anaconda environment with python>=3.6
+8. This step allows you to not add ROS paths by default and only add the paths when you need ROS. For instance, you can run any habitat modules by activing your python3.6 anaconda environment without issue when ROS paths are not added.
+9. This step allows you to add ROS required paths more easil when you need to use ROS. 
 
-## Running (section will probably be change into a colored diagram like gazebo_ros interface)
+## Running (section will probably be changed into a colored diagram like gazebo_ros interface)
 1. activate your anaconda python>=3.6 and cd into habitat-api's root directory
+
 2. Run python habitat_ros/hab_ros_interface.py to begin node that publishes to habitat sensor readings topic and subscribes to the /cmd_vel topics
+
+    ![hab_ros_interface](images/hab_ros_interface.png)
+
 3. Run roslaunch habitat_interface default.launch to convert convert all habitat sensor messages into ROS msgs (e.g. from numpy image convert to ros image) (here I recommend deactivating anaconda and or switching to a python 2.7 environment, as you won't have to interact with the habitat environment again during simulation). This will ensure all of the sensors are being published on the correct topics. The default.launch folder also prpovides an interface with joystick, rviz, rqt_graph, rqt_tree, and laser scan matcher, image view
+    ![hab_ros_sensor](images/hab2ros_sensor.png)
+
 4. Refer to the published subscribed topics below for details 
 
 ### habitat-api/habitat_ros/hab_ros_plant.py
