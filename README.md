@@ -46,7 +46,7 @@ The following picture shows how I modified my ~/.bashrc file to complete steps 8
 4. You need habitat api and habitat sim installed to run simulator backend
 5. NA
 6. The habitat_ros folder contains the ROS plugin (python module) to interface with Habitat's backend. I recommend cutting and pasting this folder instead of copying and pasting because this folder shouldn't belong in a ROS package. In the future, the habitat_ros folder might be merged with habitat-api's repository so you won't have to do this step
-7. This step installs a new rospkg in your anaconda environment since the one you installed with your ROS distribution is done using apt-get which installs to you system's default python directory, and not the Anaconda directory you installed Habitat with. After this step, you can use rospkg functionalities in your anaconda environment with python>=3.6. In short, this step ensures ROS works in an Anaconda environment with python>=3.6
+7. This step installs a new rospkg in your anaconda environment since the one you installed with your ROS distribution is done using apt-get which installs to your system's default python directory, and not the Anaconda directory you installed Habitat in. After this step, you can use rospkg functionalities in your anaconda environment with python>=3.6. In short, this step ensures ROS works in an Anaconda environment with python>=3.6
 8. This step allows you to not add ROS paths by default and only add the paths when you need ROS. 
 9. This step allows you to add ROS required paths more easily
 
@@ -58,19 +58,18 @@ The following picture shows how I modified my ~/.bashrc file to complete steps 8
 
 3. Deactivatie Anaconda and or switch to a ROS compatible python 2.7 environment, as you won't need python>=3.6 anymore to interact with the Habitat backend
  
-4. Run `roslaunch habitat_interface default.launch` to convert all habitat sensor messages into ROS mssageses (e.g.  numpy image to ros image).  This launch file also launches a joystick controller to control habitat agent, rviz, rqt_graph, rqt_tree, and laser scan matcher, image view
+4. Run `roslaunch habitat_interface default.launch` to convert all habitat sensor messages into ROS mssageses (e.g.  numpy image to ros image).  This launch file also launches a joystick controller to control the habitat agent along with visualization tools such as rviz, rqt_graph, and image view
 
 <!-- 
 This launch file also ensure all of the custom habitat sensor topics are being converted to ROS topics (e.g. numpy image converted to ROS image). Most notably, there is a node in this launch file to convert a depth image into laser scan. -->
    
-
 ### Publish/subscribed topics by hab_ros_plant.py
 
 List out finialzied publish/subscribed topic names
 
 ### Publish/subscribed topics by habitat_interface launch files 
 
-List out the finialized published/subscribed topic names for default.launch (possibly hector_map.launch and move_base.launch but these are pretty standard ROS package launch files so maybe just say refer to their wiki)
+List out the finialized published/subscribed topic names for default.launch (possibly also hector_map.launch and move_base.launch but these are pretty standard ROS package launch files so maybe just say refer to their wiki)
     
 
 ### Modifying Habitat Simulator Settings
@@ -90,10 +89,10 @@ Specifically, inside your config file, modify the DATASET tag. See screenshot be
 
 #### Changing Robot Dynamics
 
-You can modify the _update_position and _update_attitude methods in hab_ros_interface.py to change the robot's behaviour at each time step. (e.g. you can specifiy that the robot has a maximum acceleration of 0.1m/s^2)
+You can modify the _update_position and _update_attitude behaviours/methods in the sim_env class in hab_ros_interface.py to change the robot's behaviour at each time step. (e.g. you can specifiy that the robot has a maximum acceleration of 0.1m/s^2)
 
 #### Changing Sensor Publishing Freuqency
-Change the _sensor_rate parameter in the sim_env class in hab_ros_interface.py
+Change the _sensor_rate class variable in hab_ros_interface.py
 
 ## Testing
 TBD
@@ -104,14 +103,13 @@ Haibtat uses pytest, and currently I'm learning how to use pytest with ROS
 
 1. Place Habitat in a catkin work space (i.e. make Habitat a ROS package). The advantage of wrapping Habitat in a catkin_ws is that we can use launch files to remap topics and do unit and integration tests. The main difficulty of this implmentation is that most of habitat's files specify relative paths, while ROS commands such as rosrun and roslaunch sets "the working directory of all nodes to $ROS_HOME, which in most cases will be $HOME/.ros" (source: https://answers.ros.org/question/235337/unable-to-read-a-file-while-using-relative-path/)
  
-    Therefore, to wrap habitat in a catkin_package, we either need to change all paths in the habitat environment to be absolute paths, or need to somehow use ROS' `rospack find` feature (`$find some_package` feature in ROS launch files) to change all relative paths to absolute paths at run time.
+    Therefore, to wrap habitat in a catkin_package, we either need to change all paths in habitat-api (possibly also habitat-sim) to be absolute paths, or need to somehow use ROS' `rospack find` feature (`$find some_package` feature in ROS launch files) to change all relative paths to absolute paths at run time.
 
     Below is an image showing a sample habitat episode specification file. You can see the path to the scene is relative to habitat-api's root directory.
 
     ![episode_spec_data](images/episode_spec_data.png)
 
 2. Add a simple script to convert habitat generated top down maps to ROS/Rviz compatible maps so that ground truth map can be displayed when doing ROS navigation
-3. Configure additional high resolution rgb cameras (pointing in different directions) on the agent 
-4. Improve multithreading implementation of hab_ros_interface.py to optimize for performance
-5. Add unit tests and ROS node tests
+3. Improve multithreading implementation of hab_ros_interface.py to optimize for performance
+4. Add unit tests and ROS node tests
 
