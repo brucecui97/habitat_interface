@@ -1,0 +1,4 @@
+{
+  "test/test_depth_ros.py": true, 
+  "test/test_rgb_ros.py": true
+}

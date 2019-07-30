@@ -63,14 +63,18 @@ The following picture shows how I modified my ~/.bashrc file to complete steps 8
 <!-- 
 This launch file also ensure all of the custom habitat sensor topics are being converted to ROS topics (e.g. numpy image converted to ROS image). Most notably, there is a node in this launch file to convert a depth image into laser scan. -->
    
-### Publish/subscribed topics by hab_ros_plant.py
+### Publish/subscribed topics by hab_ros_interface.py
 
-List out finialzied publish/subscribed topic names
+Published:
 
-### Publish/subscribed topics by habitat_interface launch files 
+ * /habitat/depth [rospy_tutorials/Floats]
+ * /rosout [rosgraph_msgs/Log]
+ * /habitat/rgb [rospy_tutorials/Floats] 
+ by default.launch)
+ * /depth_and_pointgoal [rospy_tutorials/Floats] (
 
-List out the finialized published/subscribed topic names for default.launch (possibly also hector_map.launch and move_base.launch but these are pretty standard ROS package launch files so maybe just say refer to their wiki)
-    
+Subscribed
+* /cmd_vel [geometry_msgs/Twist]
 
 ### Modifying Habitat Simulator Settings
 

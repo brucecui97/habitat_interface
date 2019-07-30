@@ -1,0 +1,11 @@
+{
+    "python.formatting.provider": "black",
+    "C_Cpp.default.configurationProvider": "go2sh.cmake-integration",
+    "python.testing.pytestArgs": [
+        "test"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "python.pythonPath": "/home/bruce/anaconda3/envs/rosbare/bin/python"
+}
