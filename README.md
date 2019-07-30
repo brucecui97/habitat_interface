@@ -32,8 +32,8 @@ habitat-sim
 The following steps ensure you can run Anaconda along side ROS (we need Anaconda because Habitat requires python>=3.6 while ROS requires python2)
 
 7. In the Anaconda environment you used to install habitat-api and habitat-sim, run pip install rospkg so the file habitat-api/habitat_ros/hab_ros_plant.py can be ran from your Python3.6 Anaconda environment
-8. If your setup.bash files related to ROS is automatically being sourced by ~/.bashrc, remove that so you won't run into errors because of ROS adding "/opt/ros/kinetic/lib/python2.7/dist-packages" to your python path. (e.g. you get the following error when importing cv2 in a Python3.6 Anaconda environment: "/opt/ros/kinetic/lib/python2.7/dist-packages/cv2.so: undefined symbol: PyCObject_Type". (more details about this issue can be found here: https://stackoverflow.com/questions/43019951/after-install-ros-kinetic-cannot-import-opencv)
-9. [optional] Add an alias to the sourcing commands of your ROS setup.bash files and only source ROS related bash files when needed). 
+8. If your setup.bash files related to ROS is automatically being sourced by ~/.bashrc, remove that so you won't run into errors because of ROS adding "/opt/ros/kinetic/lib/python2.7/dist-packages" to your python path. (e.g. If you don't you would get the following error when importing cv2 in a Python3.6 Anaconda environment: "/opt/ros/kinetic/lib/python2.7/dist-packages/cv2.so: undefined symbol: PyCObject_Type". (more details about this issue can be found here: https://stackoverflow.com/questions/43019951/after-install-ros-kinetic-cannot-import-opencv)
+9.  [optional] Add an alias to the sourcing commands of your ROS setup.bash files
 
 The following picture shows how I modified my ~/.bashrc file to complete steps 8 and 9
 
@@ -56,7 +56,7 @@ The following picture shows how I modified my ~/.bashrc file to complete steps 8
 
 2. Run `python habitat_ros/hab_ros_interface.py` to run the node that publishes on habitat sensor reading topics and subscribes to the /cmd_vel topics
 
-3. [optional] deactivatie Anaconda and or switch to a python 2.7 environment at, as you won't need python>=3.6 anymore to interact with the Habitat backend
+3. Deactivatie Anaconda and or switch to a ROS compatible python 2.7 environment, as you won't need python>=3.6 anymore to interact with the Habitat backend
  
 4. Run `roslaunch habitat_interface default.launch` to convert all habitat sensor messages into ROS mssageses (e.g.  numpy image to ros image).  This launch file also launches a joystick controller to control habitat agent, rviz, rqt_graph, rqt_tree, and laser scan matcher, image view
 
@@ -104,14 +104,14 @@ Haibtat uses pytest, and currently I'm learning how to use pytest with ROS
 
 1. Place Habitat in a catkin work space (i.e. make Habitat a ROS package). The advantage of wrapping Habitat in a catkin_ws is that we can use roslaunch files to remap topics and do unit and integration tests through launch files. The main difficulty is that most of habitat's files specify relative paths, while ROS commands such as rosrun and roslaunch sets "the working directory of all nodes to $ROS_HOME, which in most cases will be $HOME/.ros" (source: https://answers.ros.org/question/235337/unable-to-read-a-file-while-using-relative-path/)
  
-Therefore, to wrap habitat in a catkin_package, we either need to change all paths in the habitat environment to be absolute paths, or need to somehow use ROS' rospack find feature ($find some_package feature in launch files) to change all relative paths to absolute paths at run time.
+    Therefore, to wrap habitat in a catkin_package, we either need to change all paths in the habitat environment to be absolute paths, or need to somehow use ROS' `rospack find` feature (`$find some_package` feature in ROS launch files) to change all relative paths to absolute paths at run time.
 
-Below is an image showing a sample habitat episode specification file. You can see the path to the scene is relative to habitat-api's root directory.
+    Below is an image showing a sample habitat episode specification file. You can see the path to the scene is relative to habitat-api's root directory.
 
-![episode_spec_data](images/episode_spec_data.png)
+    ![episode_spec_data](images/episode_spec_data.png)
 
 2. Add a simple script to convert habitat's top down map to ROS compatible map with Rviz so ground truth map exists when doing ROS navigation
-3. Improve multithreading implementation of hab_ros_interface.py to optimize for performance
-4. Add additional high resolution rgb sensors to the agent pointing in different directions
+3. Add additional high resolution rgb sensors to the agent pointing in different directions
+4. Improve multithreading implementation of hab_ros_interface.py to optimize for performance
 5. Add unit tests and ROS node tests
 
