@@ -73,7 +73,7 @@ The following steps are to make sure you can run Anaconda along side ROS (we nee
 
     ![hab_ros_interface](images/hab_ros_interface.png)
 
-3. Run roslaunch habitat_interface default.launch to convert convert all habitat sensor messages into ROS msgs (e.g. from numpy image convert to ros image) (here I recommend deactivating anaconda and or switching to a python 2.7 environment, as you won't have to interact with the habitat environment again during simulation). This will ensure all of the sensors are being published on the correct topics. The default.launch folder also prpovides an interface with joystick, rviz, rqt_graph, rqt_tree, and laser scan matcher, image view
+3. Run roslaunch habitat_interface default.launch to convert convert all habitat sensor messages into ROS msgs (e.g. from numpy image convert to ros image) (You can also deactivatie Anaconda and or switching to a python 2.7 environment at this step, as you won't need python>=3.6 anymore to interact with the Habitat backend). The default launch file will ensure all of the custom habitat sensor topics are being converted to ROS topics (e.g. numpy image converted to ROS image). Most notably, there is a node in this launch file to convert a depth image into laser scan. This launch file also launches a joystick controller to control habitat agent (TODO change to habitat cmd_vel), rviz, rqt_graph, rqt_tree, and laser scan matcher, image view
     ![hab_ros_sensor](images/hab2ros_sensor.png)
 
 4. Refer to the published subscribed topics below for details 
@@ -109,18 +109,27 @@ To change scenes, change the config file fed into the environment initializer in
 
 #### Changing robot dynamics
 
-You can modify the update_position and update_attitude methods to change the robot's behaviour at each time step. (e.g. you can specifiy that the robot can only accelerate at 0.1m/s^2)
+You can modify the update_position and update_attitude methods in hab_ros_interface.py to change the robot's behaviour at each time step. (e.g. you can specifiy that the robot can only accelerate at 0.1m/s^2)
 #### Changing sensor publishing freuqency
 change the sensor frequency in the sim_env class in hab_ros_interface.py (consider putting all constants as caps in the beginning of the hab_ros_interface file)
 
 ### Future work
-attempting to wrap habitat in a catkin work space; however, the main difficulty is that most of habitat's paths used in their scripts use relative paths, but rosrun/roslaunch sets its default path to ~/.ros (confirm this), so to wrap habitat in a catkin_package, we either need to change all paths in the habitat environment to be absolute paths, or need to somehow use ROS' rospack find or ($find some_package in launch file) feature to change paths
+
+Attempting to wrap habitat in a catkin work space; however, the main difficulty is that most of habitat's files specify relative paths, while
+
+>the working directory of all nodes is set to $ROS_HOME, which in most cases will be $HOME/.ros
+
+https://answers.ros.org/question/235337/unable-to-read-a-file-while-using-relative-path/
+
+![episode_spec_data](images/episode_spec_data.png)
+
+Therefore, to wrap habitat in a catkin_package, we either need to change all paths in the habitat environment to be absolute paths, or need to somehow use ROS' rospack find feature ($find some_package in launch file) to change all relative paths to absolute paths manually
 
 improving the multithreading implementation of the plug in to optimize for performance
 
 add a simple script to convert habitat's top down map to ROS compatible map with Rviz so ground truth map exists when doing ROS navigation
 
-add sensors to the robot so we can have multiple views at one time when operating the agent
+add additional Sensors to the robot so we can have multiple views at one time when operating the robot
 
 
 
