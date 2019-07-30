@@ -58,7 +58,7 @@ The following picture shows how I modified my ~/.bashrc file to complete steps 8
 
 3. Deactivatie Anaconda and or switch to a ROS compatible python 2.7 environment, as you won't need python>=3.6 anymore to interact with the Habitat backend
  
-4. Run `roslaunch habitat_interface default.launch` to convert all habitat sensor messages into ROS mssageses (e.g.  numpy image to ros image).  This launch file also launches a joystick controller to control the habitat agent along with visualization tools such as rviz, rqt_graph, and image view
+4. Run `roslaunch habitat_interface default.launch` to convert all habitat sensor messages into ROS mssageses (e.g.  numpy image to ROS image).  This launch file also launches a joystick controller to control the habitat agent along with visualization tools such as rviz, rqt_graph, and image view
 
 <!-- 
 This launch file also ensure all of the custom habitat sensor topics are being converted to ROS topics (e.g. numpy image converted to ROS image). Most notably, there is a node in this launch file to convert a depth image into laser scan. -->
