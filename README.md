@@ -100,7 +100,7 @@ TBD
 
 Haibtat uses pytest, and currently I'm learning how to use pytest with ROS
 
-### Future work 
+## Future work 
 
 1. Place Habitat in a catkin work space (i.e. make Habitat a ROS package). The advantage of wrapping Habitat in a catkin_ws is that we can use roslaunch files to remap topics and do unit and integration tests through launch files. The main difficulty is that most of habitat's files specify relative paths, while ROS commands such as rosrun and roslaunch sets "the working directory of all nodes to $ROS_HOME, which in most cases will be $HOME/.ros" (source: https://answers.ros.org/question/235337/unable-to-read-a-file-while-using-relative-path/)
  
