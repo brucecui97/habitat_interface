@@ -25,7 +25,7 @@ habitat-sim
 1. Clone this repository into your catkin_ws/src folder
 2. Run `cd ~/catkin_ws && catkin_make`
 3. Install ROS' laser scan matcher package by running `sudo apt-get install ros-kinetic-laser-scan-matcher`
-4. [Anaconda environment with python>=3.6 is needed for this step] Install habitat-api and habitat-sim by following their installation instructions at https://github.com/facebookresearch/habitat-api. Download any of the datasets provided by Habitat that you would like to use  (TODO decide whether to link to my repo instead)
+4. [Anaconda environment with python>=3.6 is needed for this step] Install habitat-api and habitat-sim by following their installation instructions at https://github.com/facebookresearch/habitat-api (TODO decide whether to link to my repo instead)
 5. Resolve errors you encounter when installing habitat-api or sim by seeing their respective issues page first. An error I encountered regularly when installing habitat-sim is the "ModuleNotFoundError: No module named 'habitat_sim._ext'" and my hacky way around it is to copy the _ext folder from the build directory (/habitat-sim/build/lib.linux-x86_64-3.6/habitat_sim) to (/habitat-sim/habitat_sim) (TODO maybe ask Habitat people why after trying to install on new machine again first)
 6.  Cut and paste the habitat_ros folder in this repo into habitat-api's root directory, and cut and paste the pointnav_rgbd.yaml file into the /habitat-api/configs/tasks folder (replacing the original pointnav_rgbd.yaml file)
 
@@ -64,6 +64,7 @@ The following picture shows how I modified my ~/.bashrc file to complete steps 8
 
 In addition, launch files for running hector_mapping (hector_map.launch) and navigation (move_base.launch) are also included. First run default.launch, then run either hector_map.launch or move_base.launch.
 
+Note that to run navigation, you need to change the value of the "map_path" variable in move_base.launch to point to the map you want to use.
 <!-- 
 This launch file also ensure all of the custom habitat sensor topics are being converted to ROS topics (e.g. numpy image converted to ROS image). Most notably, there is a node in this launch file to convert a depth image into laser scan. -->
    
