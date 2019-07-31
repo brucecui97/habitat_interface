@@ -43,9 +43,9 @@ The following picture shows how I modified my ~/.bashrc file to complete steps 8
 1. NA
 2. NA
 3. Normally ROS does not come with laser scan matcher package, which is needed for visual odometry
-4. You need habitat api and habitat sim installed to run simulator backend
+4. You need habitat api and habitat sim installed to run simulator back-end
 5. NA
-6. The habitat_ros folder contains the ROS plugin (python module) to interface with Habitat's backend, and the pointnav_rgbd.yaml file specifies to the simulator to use 720p x 720p rgb and depth cameras. I recommend cutting and pasting instead of copying and pasting because these two items shouldn't belong in a ROS package. In the future, the these might be merged with habitat-api's repository so you won't have to do this step
+6. The habitat_ros folder contains the ROS plugin (python module) to interface with Habitat's back-end, and the pointnav_rgbd.yaml file specifies to the simulator to use 720p x 720p rgb and depth cameras. I recommend cutting and pasting instead of copying and pasting because these two items shouldn't belong in a ROS package. In the future, the these might be merged with habitat-api's repository so you won't have to do this step
 7. This step installs a new rospkg in your anaconda environment since the one you installed with your ROS distribution is done using apt-get which installs to your system's default python directory, and not the Anaconda directory you installed Habitat in. After this step, you can use rospkg functionalities in your anaconda environment with python>=3.6. In short, this step ensures ROS works in an Anaconda environment with python>=3.6
 8. This step allows you to not add ROS paths by default and only add the paths when you need ROS. 
 9. This step allows you to add ROS required paths more easily
@@ -56,11 +56,11 @@ The following picture shows how I modified my ~/.bashrc file to complete steps 8
 2. Source your ROS related setup.bash files
 3. Run `python habitat_ros/hab_ros_interface.py` to run the node that publishes on habitat sensor reading topics and subscribes to the /cmd_vel topics
 
-4.  Deactivatie Anaconda as you won't need python>=3.6 anymore to interact with the Habitat backend (note that this step is hacky. I usally just go inside my ~/.bashrc and comment/uncomment the lines related to Anaconda manually depending on whether or not I need Anaconda)
+4.  Deactivate Anaconda as you won't need python>=3.6 anymore to interact with the Habitat back-end (This step is hacky. I usually just go inside my ~/.bashrc and comment/uncomment the lines related to Anaconda manually depending on whether or not I need Anaconda)
 
     ![conda](images/conda.png) 
 
-5. Source your ROS related setup.bash files again and run `roslaunch habitat_interface default.launch` to convert all habitat sensor messages into ROS mssageses (e.g.  numpy image to ROS image).  This launch file also launches a joystick controller to control the habitat agent along with visualization tools such as rviz, rqt_graph, and image view
+5. Source your ROS related setup.bash files again and run `roslaunch habitat_interface default.launch` to convert all habitat sensor messages into ROS messages  (e.g.  numpy image to ROS image).  This launch file also launches a joystick controller to control the habitat agent along with visualization tools such as rviz, rqt_graph, and image view
 
 In addition, launch files for running hector_mapping (hector_map.launch) and navigation (move_base.launch) are also included. First run default.launch, then run either hector_map.launch or move_base.launch.
 
@@ -107,7 +107,7 @@ TODO (Haibtat uses pytest, and currently I'm learning how to use pytest with ROS
 
 ## Future work 
 
-1. Place Habitat in a catkin work space (i.e. make Habitat a ROS package). The advantage of wrapping Habitat in a catkin_ws is that we can use launch files to remap topics and do unit and integration tests. The main difficulty of this implmentation is that most of habitat's files specify relative paths, while ROS commands such as rosrun and roslaunch sets "the working directory of all nodes to $ROS_HOME, which in most cases will be $HOME/.ros" (source: https://answers.ros.org/question/235337/unable-to-read-a-file-while-using-relative-path/)
+1. Place Habitat in a catkin work space (i.e. make Habitat a ROS package). The advantage of wrapping Habitat in a catkin_ws is that we can use launch files to remap topics and do unit and integration tests. The main difficulty of this implementation  is that most of habitat's files specify relative paths, while ROS commands such as rosrun and roslaunch sets "the working directory of all nodes to $ROS_HOME, which in most cases will be $HOME/.ros" (source: https://answers.ros.org/question/235337/unable-to-read-a-file-while-using-relative-path/)
  
     Therefore, to wrap habitat in a catkin_package, we either need to change all paths in habitat-api (possibly also habitat-sim) to be absolute paths, or need to somehow use ROS' `rospack find` feature (`$find some_package` feature in ROS launch files) to change all relative paths to absolute paths at run time.
 
@@ -115,7 +115,9 @@ TODO (Haibtat uses pytest, and currently I'm learning how to use pytest with ROS
 
     ![episode_spec_data](images/episode_spec_data.png)
 
-2. Add a simple script to convert habitat generated top down maps to ROS/Rviz compatible maps so that ground truth map can be displayed when doing ROS navigation
-3. Improve multithreading implementation of hab_ros_interface.py to optimize for performance
-4. Add unit tests and ROS node tests
+2. Simplify the procedures to run Habitat with ROS. For example, eliminate the need to manually comment out lines in .bashrc to run system's default ROS. Currently I'm searching/developing a robust method to run ROS in a python2.7 Anaconda environment.
+
+3. Add a simple script to convert habitat generated top down maps to ROS/Rviz compatible maps so that ground truth map can be displayed when doing ROS navigation
+4. Improve multithreading implementation of hab_ros_interface.py to optimize for performance
+5. Add unit tests and ROS node tests
 
