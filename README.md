@@ -56,9 +56,11 @@ The following picture shows how I modified my ~/.bashrc file to complete steps 8
 2. Source your ROS related setup.bash files
 3. Run `python habitat_ros/hab_ros_interface.py` to run the node that publishes on habitat sensor reading topics and subscribes to the /cmd_vel topics
 
-4. [optional] Deactivatie Anaconda as you won't need python>=3.6 anymore to interact with the Habitat backend
- 
-5. Run `roslaunch habitat_interface default.launch` to convert all habitat sensor messages into ROS mssageses (e.g.  numpy image to ROS image).  This launch file also launches a joystick controller to control the habitat agent along with visualization tools such as rviz, rqt_graph, and image view
+4.  Deactivatie Anaconda as you won't need python>=3.6 anymore to interact with the Habitat backend (note that this step is hacky. I usally just go inside my ~/.bashrc and comment/uncomment the lines related to Anaconda manually depending on whether or not I need Anaconda)
+
+    ![conda](images/conda.png) 
+
+5. Source your ROS related setup.bash files again and run `roslaunch habitat_interface default.launch` to convert all habitat sensor messages into ROS mssageses (e.g.  numpy image to ROS image).  This launch file also launches a joystick controller to control the habitat agent along with visualization tools such as rviz, rqt_graph, and image view
 
 In addition, launch files for running hector_mapping (hector_map.launch) and navigation (move_base.launch) are also included. First run default.launch, then run either hector_map.launch or move_base.launch.
 
