@@ -27,7 +27,7 @@ habitat-sim
 3. Install ROS' laser scan matcher package by running `sudo apt-get install ros-kinetic-laser-scan-matcher`
 4. [Anaconda environment with python>=3.6 is needed for this step] Install habitat-api and habitat-sim by following their installation instructions at https://github.com/facebookresearch/habitat-api. Download any of the datasets provided by Habitat that you would like to use  (TODO decide whether to link to my repo instead)
 5. Resolve errors you encounter when installing habitat-api or sim by seeing their respective issues page first. An error I encountered regularly when installing habitat-sim is the "ModuleNotFoundError: No module named 'habitat_sim._ext'" and my hacky way around it is to copy the _ext folder from the build directory (/habitat-sim/build/lib.linux-x86_64-3.6/habitat_sim) to (/habitat-sim/habitat_sim) (TODO maybe ask Habitat people why after trying to install on new machine again first)
-6.  Cut and paste the habitat_ros folder in this repo into habitat-api's root directory
+6.  Cut and paste the habitat_ros folder in this repo into habitat-api's root directory, and cut and paste the pointnav_rgbd.yaml file into the /habitat-api/configs/tasks folder (replacing the original pointnav_rgbd.yaml file)
 
 The following steps ensure you can run Anaconda along side ROS (we need Anaconda because Habitat requires python>=3.6 while ROS requires python2)
 
@@ -45,7 +45,7 @@ The following picture shows how I modified my ~/.bashrc file to complete steps 8
 3. Normally ROS does not come with laser scan matcher package, which is needed for visual odometry
 4. You need habitat api and habitat sim installed to run simulator backend
 5. NA
-6. The habitat_ros folder contains the ROS plugin (python module) to interface with Habitat's backend. I recommend cutting and pasting this folder instead of copying and pasting because this folder shouldn't belong in a ROS package. In the future, the habitat_ros folder might be merged with habitat-api's repository so you won't have to do this step
+6. The habitat_ros folder contains the ROS plugin (python module) to interface with Habitat's backend, and the pointnav_rgbd.yaml file specifies to the simulator to use 720p x 720p rgb and depth cameras. I recommend cutting and pasting instead of copying and pasting because these two items shouldn't belong in a ROS package. In the future, the these might be merged with habitat-api's repository so you won't have to do this step
 7. This step installs a new rospkg in your anaconda environment since the one you installed with your ROS distribution is done using apt-get which installs to your system's default python directory, and not the Anaconda directory you installed Habitat in. After this step, you can use rospkg functionalities in your anaconda environment with python>=3.6. In short, this step ensures ROS works in an Anaconda environment with python>=3.6
 8. This step allows you to not add ROS paths by default and only add the paths when you need ROS. 
 9. This step allows you to add ROS required paths more easily
@@ -56,7 +56,7 @@ The following picture shows how I modified my ~/.bashrc file to complete steps 8
 2. Source your ROS related setup.bash files
 3. Run `python habitat_ros/hab_ros_interface.py` to run the node that publishes on habitat sensor reading topics and subscribes to the /cmd_vel topics
 
-4. Deactivatie Anaconda and or switch to a ROS compatible python 2.7 environment, as you won't need python>=3.6 anymore to interact with the Habitat backend
+4. [optional] Deactivatie Anaconda as you won't need python>=3.6 anymore to interact with the Habitat backend
  
 5. Run `roslaunch habitat_interface default.launch` to convert all habitat sensor messages into ROS mssageses (e.g.  numpy image to ROS image).  This launch file also launches a joystick controller to control the habitat agent along with visualization tools such as rviz, rqt_graph, and image view
 
