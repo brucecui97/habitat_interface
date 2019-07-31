@@ -11,7 +11,7 @@ Connect Facebook's AI Habitat simulator environment with ROS so that traditional
 
 ## Dependencies (Tested on Ubuntu 16.04 using ROS kinetic)
 
-(TODO confirm dependencies maybe by following instructions here:https://stackoverflow.com/questions/42237072/list-dependencies-in-python)
+(TODO confirm dependencies by following instructions here: https://stackoverflow.com/questions/42237072/list-dependencies-in-python)
 
 ROS Kinetic
 
@@ -101,7 +101,7 @@ You can modify the _update_position and _update_attitude behaviours/methods in t
 Change the _sensor_rate class variable in hab_ros_interface.py
 
 ## Testing
-TBD (Haibtat uses pytest, and currently I'm learning how to use pytest with ROS)
+TODO (Haibtat uses pytest, and currently I'm learning how to use pytest with ROS)
 
 ## Future work 
 
