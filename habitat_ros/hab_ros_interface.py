@@ -172,7 +172,7 @@ def callback(vel, my_env):
 def main():
     global lock
 
-    my_env = sim_env(env_config_file="configs/tasks/pointnav_rgbd_gibson.yaml")
+    my_env = sim_env(env_config_file="configs/tasks/pointnav_rgbd.yaml")
     # start the thread that publishes sensor readings
     my_env.start()
 
