@@ -23,7 +23,7 @@ habitat-sim
 ## Installation Procedures
 
 1. Clone this repository into your catkin_ws/src folder
-2. Run `cd ~/catkin_ws && catkin_make`
+2. Run `cd ~/catkin_ws && catkin_make`(replace catkin_ws with your own workspace name if applicable)
 3. Install ROS' laser scan matcher package by running `sudo apt-get install ros-kinetic-laser-scan-matcher`
 4. [Anaconda environment with python>=3.6 is needed for this step] Install habitat-api and habitat-sim by following their installation instructions at https://github.com/facebookresearch/habitat-api (TODO decide whether to link to my repo instead)
 5. Resolve errors you encounter when installing habitat-api or sim by seeing their respective issues page first. An error I encountered regularly when installing habitat-sim is the "ModuleNotFoundError: No module named 'habitat_sim._ext'" and my hacky way around it is to copy the _ext folder from the build directory (/habitat-sim/build/lib.linux-x86_64-3.6/habitat_sim) to (/habitat-sim/habitat_sim) (TODO maybe ask Habitat people why after trying to install on new machine again first)
