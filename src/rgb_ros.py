@@ -16,7 +16,10 @@ pub = rospy.Publisher("ros_img_rgb", Image, queue_size=10)
 
 
 def callback(data):
-    img = (np.reshape(data.data, (720, 720, 3))).astype(np.uint8)
+    img_raveled = data.data[0:-2]
+    img_size = data.data[-2:].astype(int)
+
+    img = (np.reshape(img_raveled, (img_size[0], img_size[1], 3))).astype(np.uint8)
     image_message = CvBridge().cv2_to_imgmsg(img, encoding="rgb8")
     pub.publish(image_message)
 
