@@ -21,7 +21,13 @@ camera_info_pub = rospy.Publisher("camera_info_topic", CameraInfo, queue_size=0)
 def callback(data):
     print(rospy.get_name(), "I heard %s" % str(data.data))
 
-    img = np.float32((np.reshape(data.data, (DEPTH_IMG_WIDTH, DEPTH_IMG_HEIGHT))))
+    img_raveled = data.data[0:-2]
+    img_size = data.data[-2:].astype(int)
+
+    img = np.float32(np.reshape(img_raveled, (img_size[0], img_size[1])))
+
+
+    #img = np.float32((np.reshape(data.data, (DEPTH_IMG_WIDTH, DEPTH_IMG_HEIGHT))))
 
     h = std_msgs.msg.Header()
     h.stamp = rospy.Time.now()
