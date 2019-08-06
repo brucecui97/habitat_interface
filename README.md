@@ -19,7 +19,7 @@ Anaconda (https://www.anaconda.com/distribution/)
 ## Installation Procedures
 1. Clone this repository into your catkin_ws/src folder
 2. Run `cd ~/catkin_ws && catkin_make`(replace catkin_ws with your own workspace name if applicable)
-3. Install ROS' laser scan matcher package by running `sudo apt-get install ros-kinetic-laser-scan-matcher`
+3. Install ROS' laser scan matcher package by running `sudo apt-get install ros-kinetic-laser-scan-matcher`. If you encounter erros relating to "cannot find package", this link helped me solve the problem https://answers.ros.org/question/325039/apt-update-fails-cannot-install-pkgs-key-not-working/
 4. [Anaconda environment with python>=3.6 is needed for this step] Install habitat-api with instructions here  https://github.com/brucecui97/habitat-api, but DO NOT install habitat-sim using the links given in this repo. Instead, install habitat-sim by following this link https://github.com/brucecui97/habitat-sim/tree/lci2019s. Specifically, the "Developer installation and getting started" section.
 5. Resolve errors you encounter when installing habitat-api and habitat-sim by seeing their issues page in Facebook's repos first. (https://github.com/facebookresearch/habitat-api and https://github.com/facebookresearch/habitat-sim)
 
