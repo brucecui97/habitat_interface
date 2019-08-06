@@ -18,8 +18,8 @@ ROS Kinetic
 1. Clone this repository into your catkin_ws/src folder
 2. Run `cd ~/catkin_ws && catkin_make`(replace catkin_ws with your own workspace name if applicable)
 3. Install ROS' laser scan matcher package by running `sudo apt-get install ros-kinetic-laser-scan-matcher`
-4. [Anaconda envitheronment with python>=3.6 is needed for this step] Install habitat-api with instructions here  https://github.com/brucecui97/habitat-api, but DO NOT install habitat-sim using the links given in this repo. Instead, install habitat-sim by following this link https://github.com/brucecui97/habitat-sim/tree/lci2019s
-5. Resolve errors you encounter when installing habitat-api or sim by seeing their respective issues page first. When installing habitat-sim, I recommend following the instructions under "Developer installation and getting started" section
+4. [Anaconda envitheronment with python>=3.6 is needed for this step] Install habitat-api with instructions here  https://github.com/brucecui97/habitat-api, but DO NOT install habitat-sim using the links given in this repo. Instead, install habitat-sim by following this link https://github.com/brucecui97/habitat-sim/tree/lci2019s. Specifically, the "Developer installation and getting started" section.
+5. Resolve errors you encounter when installing habitat-api and habitat-sim by seeing their issues page in Facebook's repo first. (https://github.com/facebookresearch/habitat-api and https://github.com/facebookresearch/habitat-sim)
 
 The following steps ensure you can run Anaconda along side ROS (we need Anaconda because Habitat requires python>=3.6 while ROS requires python2)
 
