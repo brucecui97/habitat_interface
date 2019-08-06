@@ -13,13 +13,17 @@ Connect Facebook's AI Habitat simulator environment with ROS so that traditional
 
 ROS Kinetic (http://wiki.ros.org/kinetic)
 
+    *depthimage_to_laserscan
+    *laser_scan_matcher
+    *hector_slam [needed during mapping and navigation]
+
 Anaconda (https://www.anaconda.com/distribution/) 
 
 
 ## Installation Procedures
 1. Clone this repository into your catkin_ws/src folder
 2. Run `cd ~/catkin_ws && catkin_make`(replace catkin_ws with your own workspace name if applicable)
-3. Install ROS' laser scan matcher package by running `sudo apt-get install ros-kinetic-laser-scan-matcher`. If you encounter erros relating to "cannot find package", this link helped me solve the problem https://answers.ros.org/question/325039/apt-update-fails-cannot-install-pkgs-key-not-working/
+3. Install ROS' depthimage_to_laserscan, laser_scan_matcher and hector_slam packages by running `sudo apt-get install ros-kinetic-depthimage-to-laserscan`,  `sudo apt-get install ros-kinetic-laser-scan-matcher`, and `sudo apt-get install ros-kinetic-hector-slam`. If you encounter erros relating to "cannot find package", this link helped me solve the problem https://answers.ros.org/question/325039/apt-update-fails-cannot-install-pkgs-key-not-working/
 4. [Anaconda environment with python>=3.6 is needed for this step] Install habitat-api with instructions here  https://github.com/brucecui97/habitat-api, but DO NOT install habitat-sim using the links given in this repo. Instead, install habitat-sim by following this link https://github.com/brucecui97/habitat-sim/tree/lci2019s. Specifically, the "Developer installation and getting started" section. (Note you do not need to install these in a catkin workspace)
 5. Resolve errors you encounter when installing habitat-api and habitat-sim by seeing their issues page in Facebook's repos first. (https://github.com/facebookresearch/habitat-api and https://github.com/facebookresearch/habitat-sim)
 
@@ -27,7 +31,7 @@ The following steps ensure you can run Anaconda along side ROS (we need Anaconda
 
 6. In the Anaconda environment you used to install habitat-api and habitat-sim, run `pip install rospkg` so the file habitat-api/habitat_ros/hab_ros_plant.py can be ran from your Python3.6 Anaconda environment
 7. If your setup.bash files related to ROS is automatically being sourced by ~/.bashrc, remove that so you won't run into errors because of ROS adding "/opt/ros/kinetic/lib/python2.7/dist-packages" to your python path. (e.g. If you don't you would get the following error when importing cv2 in a Python3.6 Anaconda environment: "/opt/ros/kinetic/lib/python2.7/dist-packages/cv2.so: undefined symbol: PyCObject_Type". (more details about this issue can be found here: https://stackoverflow.com/questions/43019951/after-install-ros-kinetic-cannot-import-opencv)
-8.  [optional] Add an alias to the sourcing commands of your ROS setup.bash files
+8.  [Recommended] Add an alias to the sourcing commands of your ROS setup.bash files
 
 The following picture shows how I modified my ~/.bashrc file to complete steps 8 and 9
 
@@ -54,7 +58,8 @@ The following picture shows how I modified my ~/.bashrc file to complete steps 8
 
     ![conda](images/conda.png) 
 
-6. Source your ROS related setup.bash files again and run `roslaunch habitat_interface default.launch` to convert all habitat sensor messages into ROS messages  (e.g.  numpy image to ROS image).  This launch file also launches a joystick controller to control the habitat agent along with visualization tools such as rviz, rqt_graph, and image view
+6. close and re-open your terminal
+7. Source your ROS related setup.bash files again and run `roslaunch habitat_interface default.launch` to convert all habitat sensor messages into ROS messages  (e.g.  numpy image to ROS image).  This launch file also launches a joystick controller to control the habitat agent along with visualization tools such as rviz, rqt_graph, and image view
 
 In addition, launch files for running hector_mapping (hector_map.launch) and navigation (move_base.launch) are also included. First run default.launch, then run either hector_map.launch or move_base.launch.
 
