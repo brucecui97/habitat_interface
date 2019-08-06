@@ -20,13 +20,12 @@ ROS Kinetic
 3. Install ROS' laser scan matcher package by running `sudo apt-get install ros-kinetic-laser-scan-matcher`
 4. [Anaconda envitheronment with python>=3.6 is needed for this step] Install habitat-api with instructions here  https://github.com/brucecui97/habitat-api, but DO NOT install habitat-sim using the links given in this repo. Instead, install habitat-sim by following this link https://github.com/brucecui97/habitat-sim/tree/lci2019s
 5. Resolve errors you encounter when installing habitat-api or sim by seeing their respective issues page first. When installing habitat-sim, I recommend following the instructions under "Developer installation and getting started" section
-6.  Cut and paste the habitat_ros folder in this repo into habitat-api's root directory, and cut and paste the pointnav_rgbd.yaml file into the /habitat-api/configs/tasks folder (replacing the original pointnav_rgbd.yaml file)
 
 The following steps ensure you can run Anaconda along side ROS (we need Anaconda because Habitat requires python>=3.6 while ROS requires python2)
 
-7. In the Anaconda environment you used to install habitat-api and habitat-sim, run `pip install rospkg` so the file habitat-api/habitat_ros/hab_ros_plant.py can be ran from your Python3.6 Anaconda environment
-8. If your setup.bash files related to ROS is automatically being sourced by ~/.bashrc, remove that so you won't run into errors because of ROS adding "/opt/ros/kinetic/lib/python2.7/dist-packages" to your python path. (e.g. If you don't you would get the following error when importing cv2 in a Python3.6 Anaconda environment: "/opt/ros/kinetic/lib/python2.7/dist-packages/cv2.so: undefined symbol: PyCObject_Type". (more details about this issue can be found here: https://stackoverflow.com/questions/43019951/after-install-ros-kinetic-cannot-import-opencv)
-9.  [optional] Add an alias to the sourcing commands of your ROS setup.bash files
+6. In the Anaconda environment you used to install habitat-api and habitat-sim, run `pip install rospkg` so the file habitat-api/habitat_ros/hab_ros_plant.py can be ran from your Python3.6 Anaconda environment
+7. If your setup.bash files related to ROS is automatically being sourced by ~/.bashrc, remove that so you won't run into errors because of ROS adding "/opt/ros/kinetic/lib/python2.7/dist-packages" to your python path. (e.g. If you don't you would get the following error when importing cv2 in a Python3.6 Anaconda environment: "/opt/ros/kinetic/lib/python2.7/dist-packages/cv2.so: undefined symbol: PyCObject_Type". (more details about this issue can be found here: https://stackoverflow.com/questions/43019951/after-install-ros-kinetic-cannot-import-opencv)
+8.  [optional] Add an alias to the sourcing commands of your ROS setup.bash files
 
 The following picture shows how I modified my ~/.bashrc file to complete steps 8 and 9
 
@@ -38,10 +37,9 @@ The following picture shows how I modified my ~/.bashrc file to complete steps 8
 3. Normally ROS does not come with laser scan matcher package, which is needed for visual odometry
 4. You need habitat api and habitat sim installed to run simulator back-end. The installation links point to my repos because this allows you to use the ROS interface directly with settings I preconfigured. Please note that the main difference between my forked habitat-api repo and the Facebook's habitat-api repo is that I added the habitat_ros folder and some task config .yaml files , which can easily be copy-pasted into Facebook's habitat-api repo. Similarly, I made no modifications to Facebook's habitat-sim repo, but only added a tag indicating the habitat-sim version I tested on
 5. NA
-6. The habitat_ros folder contains the ROS plugin (python module) to interface with Habitat's back-end, and the pointnav_rgbd.yaml file specifies to the simulator to use 720p x 720p rgb and depth cameras. I recommend cutting and pasting instead of copying and pasting because these two items shouldn't belong in a ROS package. In the future, the these might be merged with habitat-api's repository so you won't have to do this step
-7. This step installs a new rospkg in your anaconda environment since the one you installed with your ROS distribution is done using apt-get which installs to your system's default python directory, and not the Anaconda directory you installed Habitat in. After this step, you can use rospkg functionalities in your anaconda environment with python>=3.6. In short, this step ensures ROS works in an Anaconda environment with python>=3.6
-8. This step allows you to not add ROS paths by default and only add the paths when you need ROS. 
-9. This step allows you to add ROS required paths more easily
+6. This step installs a new rospkg in your anaconda environment since the one you installed with your ROS distribution is done using apt-get which installs to your system's default python directory, and not the Anaconda directory you installed Habitat in. After this step, you can use rospkg functionalities in your anaconda environment with python>=3.6. In short, this step ensures ROS works in an Anaconda environment with python>=3.6
+7. This step allows you to not add ROS paths by default and only add the paths when you need ROS. 
+8. This step allows you to add ROS required paths more easily
 
 ## Running Habitat with ROS
 
@@ -112,7 +110,6 @@ TODO (Haibtat uses pytest, and currently I'm learning how to use pytest with ROS
 
 2. Simplify the procedures to run Habitat with ROS. For example, eliminate the need to manually comment out lines in .bashrc to run system's default ROS. Currently I'm searching/developing a robust method to run ROS in a python2.7 Anaconda environment.
 
-3. Add a simple script to convert habitat generated top down maps to ROS/Rviz compatible maps so that ground truth map can be displayed when doing ROS navigation
-4. Improve multithreading implementation of hab_ros_interface.py to optimize for performance
-5. Add unit tests and ROS node tests
+3. Improve multithreading implementation of hab_ros_interface.py to optimize for performance
+4. Add unit tests and ROS node tests
 
