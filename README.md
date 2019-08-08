@@ -124,6 +124,7 @@ TODO (Haibtat uses pytest, and currently I'm learning how to use pytest with ROS
 
 ## Future work 
 
+### Installation and Running Related
 1. Place Habitat in a catkin work space (i.e. make Habitat a ROS package). The advantage of wrapping Habitat in a catkin_ws is that we can use launch files to remap topics and do unit and integration tests. The main difficulty of this implementation  is that most of habitat's files specify relative paths, while ROS commands such as rosrun and roslaunch sets "the working directory of all nodes to $ROS_HOME, which in most cases will be $HOME/.ros" (source: https://answers.ros.org/question/235337/unable-to-read-a-file-while-using-relative-path/)
  
     Therefore, to wrap habitat in a catkin_package, we either need to change all paths in habitat-api (possibly also habitat-sim) to be absolute paths, or need to somehow use ROS' `rospack find` feature (`$find some_package` feature in ROS launch files) to change all relative paths to absolute paths at run time.
@@ -134,6 +135,11 @@ TODO (Haibtat uses pytest, and currently I'm learning how to use pytest with ROS
 
 2. Simplify the procedures to run Habitat with ROS. For example, eliminate the need to manually comment out lines in .bashrc to run system's default ROS. Currently I'm searching/developing a robust method to run ROS in a python2.7 Anaconda environment.
 
-3. Improve multithreading implementation of hab_ros_interface.py to optimize for performance
-4. Add unit tests and ROS node tests
+### Development Related
+1. Add unit tests and ROS node tests
+2. Add feature to modify geometry of habitat agent. For example, change the agent radius and height and/or change the agent shape to be a rectangle. My current thoughts is to modify the NavMeshSettings. (The thing that generates the navmeshes is  https://github.com/facebookresearch/habitat-sim/blob/master/src/utils/datatool/datatool.cpp  and the NavMeshSettings are the thing that specify the agent's radius: https://github.com/facebookresearch/habitat-sim/blob/master/src/esp/nav/PathFinder.h. Therefore, I think changing the `agentRadius` value should change the dimension of the agent
+3. Create a method to overlay the ground truth map generated with get_ros_map.py with a map generated through SLAM. This allows users to compare AMCL generated pose/odom with the ground truth pose/odom. Currently to overlay these two maps I am manually changing the `origin` value in the SLAM generated map's .yaml file. In the future, this step could possibly be automated by some vision/optimization technique that shifts one map's origin. Additionally, by understanding how SLAM packages like hector_slam creates its map.pgm and map.yaml, we can do things like crop the map.pgm picture in a way such that only relevant pixels remain (grey pixels surrounding the map are cropped away). This allows us to potentially select the bottom left corner of both the SLAM generated and ground truth map to be the map origin and overlay the two maps.
+4. Add more complex motion to the agent. E.g. specify that the agent can only accelerate at a maximum of `X` m/s^2. This can be done by modifying the _update_position and _update_attitude behaviours/methods in the sim_env class in hab_ros_interface.py 
+
+5. 
 
