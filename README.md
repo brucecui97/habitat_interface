@@ -101,6 +101,23 @@ You can modify the _update_position and _update_attitude behaviours/methods in t
 #### Changing Sensor Publishing Freuqency
 Change the _sensor_rate class variable in hab_ros_interface.py
 
+#### Changing number of sensors
+See examples/register_new_sensors_and_measures.py for details. 
+
+As an example, I added an additional sensor called BC_SENSOR (this is just another RGB sensor) and you can access the readings of this sensor if you add this sensor to your config file (see screenshot below as an example). You can obtain its values by calling `self.observations['bc_sensor']` in hab_ros_interface.py
+
+![bc_sensor](images/bc_sensor.png)
+
+```python
+# # Custom BC SENSOR
+#---------------------------------------------------------------------
+_C.SIMULATOR.BC_SENSOR = SENSOR.clone()
+_C.SIMULATOR.BC_SENSOR.TYPE = "HabitatSimBCSensor"
+```
+
+
+1. 
+
 ## Testing
 TODO (Haibtat uses pytest, and currently I'm learning how to use pytest with ROS)
 
