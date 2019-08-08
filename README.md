@@ -61,9 +61,9 @@ The following picture shows how I modified my ~/.bashrc file to complete steps 8
 6. close and re-open your terminal
 7. Source your ROS related setup.bash files again and run `roslaunch habitat_interface default.launch` to convert all habitat sensor messages into ROS messages  (e.g.  numpy image to ROS image).  This launch file also launches a joystick controller to control the habitat agent along with visualization tools such as rviz, rqt_graph, and image view
 
-In addition, launch files for running hector_mapping (hector_map.launch) and navigation (move_base.launch) are also included. First run default.launch, then run either hector_map.launch or move_base.launch.
+Launch files for running hector_mapping (hector_map.launch) and navigation (move_base.launch) are also included. First run default.launch, then run either hector_map.launch or move_base.launch. Note that to run navigation, you need to change the value of the "map_path" variable in move_base.launch to point to the map you want to use. In addition, you can use the get_ros_map.py script in habitat-api/habitat_ros to generate a ROS/Rviz compatible map that you can overlay with your SLAM generated map to evaluate the SLAM generated map's accuracy.
 
-Note that to run navigation, you need to change the value of the "map_path" variable in move_base.launch to point to the map you want to use.
+
 <!-- 
 This launch file also ensure all of the custom habitat sensor topics are being converted to ROS topics (e.g. numpy image converted to ROS image). Most notably, there is a node in this launch file to convert a depth image into laser scan. -->
    
@@ -79,6 +79,7 @@ Published:
 Subscribed
 * /cmd_vel [geometry_msgs/Twist]
 
+ 
 ### Modifying Habitat Simulator Settings
 
 You can change simulator settings by modifying the hab_ros_interface.py file.
