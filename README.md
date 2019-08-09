@@ -34,7 +34,7 @@ Anaconda (https://www.anaconda.com/distribution/)
 ## Installation Procedures
 1. Clone this repository into your catkin_ws/src folder
 2. Run `cd ~/catkin_ws && catkin_make`(replace catkin_ws with your own workspace name if applicable)
-3. Install ROS' depthimage_to_laserscan, laser_scan_matcher and hector_slam packages by running `sudo apt-get install ros-kinetic-depthimage-to-laserscan`,  `sudo apt-get install ros-kinetic-laser-scan-matcher`, and `sudo apt-get install ros-kinetic-hector-slam`. If you encounter erros relating to "cannot find package", this link helped me solve the problem https://answers.ros.org/question/325039/apt-update-fails-cannot-install-pkgs-key-not-working/
+3. Install ROS' depthimage_to_laserscan, laser_scan_matcher and hector_slam packages by running `sudo apt-get install ros-kinetic-depthimage-to-laserscan`,  `sudo apt-get install ros-kinetic-laser-scan-matcher`, and `sudo apt-get install ros-kinetic-hector-slam`. If you encounter errors relating to "cannot find package", this link helped me solve the problem https://answers.ros.org/question/325039/apt-update-fails-cannot-install-pkgs-key-not-working/
 4. [Anaconda environment with python>=3.6 is needed for this step] Install habitat-api with instructions here  https://github.com/brucecui97/habitat-api, but DO NOT install habitat-sim using the links given in this repo. Instead, install habitat-sim by following this link https://github.com/brucecui97/habitat-sim/tree/lci2019s. Specifically, the "Developer installation and getting started" section. (Note you do not need to install these in a catkin workspace)
 5. Resolve errors you encounter when installing habitat-api and habitat-sim by seeing their issues page in Facebook's repos first. (https://github.com/facebookresearch/habitat-api and https://github.com/facebookresearch/habitat-sim)
 
@@ -108,9 +108,9 @@ Specifically, inside your config file, modify the DATASET tag. See screenshot be
 
 #### Changing Robot Dynamics
 
-You can modify the _update_position and _update_attitude behaviours/methods in the sim_env class in hab_ros_interface.py to change the robot's behaviour at each time step. (e.g. you can specifiy that the robot has a maximum acceleration of 0.1m/s^2)
+You can modify the _update_position and _update_attitude behaviours/methods in the sim_env class in hab_ros_interface.py to change the robot's behaviour at each time step. (e.g. you can specify that the robot has a maximum acceleration of 0.1m/s^2)
 
-#### Changing Sensor Publishing Freuqency
+#### Changing Sensor Publishing Frequency
 Change the _sensor_rate class variable in hab_ros_interface.py
 
 #### Changing number of sensors
@@ -128,7 +128,7 @@ _C.SIMULATOR.BC_SENSOR.TYPE = "HabitatSimBCSensor"
 ```
 
 ## Testing
-TODO (Haibtat uses pytest, and currently I'm learning how to use pytest with ROS)
+TODO (Habitat uses pytest, and currently I'm learning how to use pytest with ROS)
 
 ## Future work 
 
@@ -146,7 +146,7 @@ TODO (Haibtat uses pytest, and currently I'm learning how to use pytest with ROS
 ### Development Related
 1. Add unit tests and ROS node tests
 2. Add feature to modify geometry of habitat agent. For example, change the agent radius and height and/or change the agent shape to be a rectangle. My current thoughts is to modify the NavMeshSettings. (The thing that generates the navmeshes is  https://github.com/facebookresearch/habitat-sim/blob/master/src/utils/datatool/datatool.cpp  and the NavMeshSettings are the thing that specify the agent's radius: https://github.com/facebookresearch/habitat-sim/blob/master/src/esp/nav/PathFinder.h. Therefore, I think changing the `agentRadius` value should change the dimension of the agent
-3. Create a method to overlay the ground truth map generated with get_ros_map.py with a map generated through SLAM. This allows users to compare AMCL generated pose/odom with the ground truth pose/odom. Currently to overlay these two maps I am manually changing the `origin` value in the SLAM generated map's .yaml file. In the future, this step could possibly be automated by some vision/optimization technique that shifts one map's origin. Additionally, by understanding how SLAM packages like hector_slam creates its map.pgm and map.yaml, we can do things like crop the map.pgm picture in a way such that only relevant pixels remain (grey pixels surrounding the map are cropped away). This allows us to potentially select the bottom left corner of both the SLAM generated and ground truth map to be the map origin and overlay the two maps.
+3. Create a method to overlay the ground truth map generated with get_ros_map.py with a map generated through SLAM. This allows users to compare AMCL generated pose/odom with the ground truth pose/odom. Currently to overlay these two maps I am manually changing the `origin` value in the SLAM generated map's  .yaml file. In the future, this step could possibly be automated by some vision/optimization technique that shifts one map's origin. Additionally, by understanding how SLAM packages like hector_slam creates its map.pgm and map.yaml, we can do things like crop the map.pgm picture in a way such that only relevant pixels remain (grey pixels surrounding the map are cropped away). This allows us to potentially select the bottom left corner of both the SLAM generated and ground truth map to be the map origin and overlay the two maps.
 4. Add more complex motion to the agent. E.g. specify that the agent can only accelerate at a maximum of `X` m/s^2. This can be done by modifying the _update_position and _update_attitude behaviours/methods in the sim_env class in hab_ros_interface.py 
 
 
