@@ -4,6 +4,17 @@
 
 Connect Facebook's AI Habitat simulator environment with ROS so that traditional ROS packages such as SLAM and navigation can be used.
 
+## Demos
+
+Navigating Habitat environment with ROS navigation package: https://youtu.be/VYfZ4wghpRA
+
+Navigating Gazebo (ROS' simulator) environment with Habitat trained agent: https://youtu.be/EaU_a6MIeIE
+
+Navigating Habitat environment with Habitat trained agent with ROS in the loop: https://youtu.be/eYywGkWd_0E
+
+Slide deck for demos https://1drv.ms/p/s!AhI7FLXI6kP7hfA3lsetrnm2y0Uq9g
+
+
 ## High Level Design
 
 ![implementation](images/implementation.png)
@@ -116,9 +127,6 @@ _C.SIMULATOR.BC_SENSOR = SENSOR.clone()
 _C.SIMULATOR.BC_SENSOR.TYPE = "HabitatSimBCSensor"
 ```
 
-
-1. 
-
 ## Testing
 TODO (Haibtat uses pytest, and currently I'm learning how to use pytest with ROS)
 
@@ -141,5 +149,4 @@ TODO (Haibtat uses pytest, and currently I'm learning how to use pytest with ROS
 3. Create a method to overlay the ground truth map generated with get_ros_map.py with a map generated through SLAM. This allows users to compare AMCL generated pose/odom with the ground truth pose/odom. Currently to overlay these two maps I am manually changing the `origin` value in the SLAM generated map's .yaml file. In the future, this step could possibly be automated by some vision/optimization technique that shifts one map's origin. Additionally, by understanding how SLAM packages like hector_slam creates its map.pgm and map.yaml, we can do things like crop the map.pgm picture in a way such that only relevant pixels remain (grey pixels surrounding the map are cropped away). This allows us to potentially select the bottom left corner of both the SLAM generated and ground truth map to be the map origin and overlay the two maps.
 4. Add more complex motion to the agent. E.g. specify that the agent can only accelerate at a maximum of `X` m/s^2. This can be done by modifying the _update_position and _update_attitude behaviours/methods in the sim_env class in hab_ros_interface.py 
 
-5. 
 
