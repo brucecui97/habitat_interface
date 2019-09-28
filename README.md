@@ -63,7 +63,7 @@ The following picture shows how I modified my ~/.bashrc file to complete steps 7
 1. Activate your anaconda python>=3.6 and cd into habitat-api's root directory
 2. Source your ROS related setup.bash files
 3. cd into the habitat-api directory
-4. Run `python habitat_ros/hab_ros_interface.py` to run the node that publishes on habitat sensor reading topics and subscribes to the /cmd_vel topics
+4. Run `python habitat_ros/hab_ros_interface.py` to run the node that publishes on habitat sensor reading topics and subscribes to the /cmd_vel topic
 
 5.  Deactivate Anaconda as you won't need python>=3.6 anymore to interact with the Habitat back-end (This step is hacky. I usually just go inside my ~/.bashrc and comment/uncomment the lines related to Anaconda manually depending on whether or not I need Anaconda)
 
