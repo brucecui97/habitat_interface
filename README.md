@@ -1,10 +1,15 @@
 # Habitat ROS Interface
 
+
 ## Objective
 
 Connect Facebook's AI Habitat simulator environment with ROS so that traditional ROS packages such as SLAM and navigation can be used.
 
 ## Demos
+
+<p align="left">
+  <img src="res/habitat_interface.gif"  height="400">
+</p>
 
 Navigating Habitat environment with ROS navigation package: https://youtu.be/VYfZ4wghpRA
 
@@ -144,3 +149,6 @@ As an example, I added an additional sensor called BC_SENSOR (this is just anoth
 7. (Just for fun) Continue developing code that transfers a Habitat trained agent to the real world (pyrobot is also working on this). I created a proof of concept script ( habitat-api/habitat_baselines/eval_habitat_agent_in_ros.py)  in June 2019, but the code might be outdated
 
 When adding new features, please note that in the habitat environment, the agent looks along the -z axis,and to the right of where the agent looks is the -x axis. Above the agent is the +y axis
+
+## References and Citation
+1. [Habitat: A Platform for Embodied AI Research](https://arxiv.org/abs/1904.01201). Manolis Savva, Abhishek Kadian, Oleksandr Maksymets, Yili Zhao, Erik Wijmans, Bhavana Jain, Julian Straub, Jia Liu, Vladlen Koltun, Jitendra Malik, Devi Parikh, Dhruv Batra. IEEE/CVF International Conference on Computer Vision (ICCV), 2019.
