@@ -3,7 +3,7 @@
 
 ## Objective
 
-Connect Facebook's AI Habitat simulator environment with ROS so that traditional ROS packages such as SLAM and navigation can be used.
+Connect Facebook's [AI Habitat](https://github.com/facebookresearch/habitat-api) simulator with ROS so that motion planning researchers can take advantage of photorealistic 3D environments and easily simulate tasks such as visual SLAM and navigation.
 
 ## Demos
 
